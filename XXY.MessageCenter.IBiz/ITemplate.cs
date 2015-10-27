@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using XXY.MessageCenter.BizEntity;
+using XXY.MessageCenter.DbEntity;
+using XXY.MessageCenter.DbEntity.Enums;
+
+namespace XXY.MessageCenter.Biz {
+
+    /// <summary>
+    /// 模板
+    /// </summary>
+    public interface ITemplate : IBaseBiz<Template> {
+
+        Task Create(Template entry);
+
+        Task Edit(int id, Template entry);
+
+        Template GetByCode(string code, string appCode, Langs? lang);
+
+        IEnumerable<Template> Search(TemplateSearchCondition cond);
+    }
+}
