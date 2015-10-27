@@ -1,42 +1,95 @@
-using System;
 using Microsoft.Practices.Unity;
+using System;
 using Microsoft.Practices.Unity.Configuration;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Practices.ObjectBuilder2;
+using XXY.Common.Attributes;
+using XXY.MessageCenter.Biz;
 
-namespace XXY.MessageCenter.App_Start
-{
-    /// <summary>
-    /// Specifies the Unity configuration for the main container.
-    /// </summary>
-    public class UnityConfig
-    {
-        #region Unity Container
-        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
-        {
+
+namespace XXY.MessageCenter {
+    public static class UnityConfig {
+
+        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() => {
             var container = new UnityContainer();
             RegisterTypes(container);
             return container;
         });
 
-        /// <summary>
-        /// Gets the configured Unity container.
-        /// </summary>
-        public static IUnityContainer GetConfiguredContainer()
-        {
+
+        public static IUnityContainer GetConfiguredContainer() {
             return container.Value;
         }
-        #endregion
 
-        /// <summary>Registers the type mappings with the Unity container.</summary>
-        /// <param name="container">The unity container to configure.</param>
-        /// <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
-        /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
-        public static void RegisterTypes(IUnityContainer container)
-        {
-            // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
-            // container.LoadConfiguration();
 
-            // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+        public static void RegisterTypes(IUnityContainer container) {
+            container.LoadConfiguration();
+
+            //对全局异常处理程序自注入
+            //container.RegisterType<ExceptionLogAttribute, ExceptionLogAttribute>();
+
+            var conv = new Convention(container,
+                typeof(BaseBiz).Assembly,
+                Assembly.GetExecutingAssembly()
+                );
+
+            container.RegisterTypes(conv);
+        }
+
+        public class Convention : RegistrationConvention {
+
+            private readonly IUnityContainer container;
+            private readonly IEnumerable<Type> types;
+
+            public Convention(IUnityContainer unity, params Assembly[] assemblies)
+                : this(unity, assemblies.SelectMany(a => a.GetExportedTypes()).ToArray()) {
+                this.container = unity;
+            }
+
+            public Convention(IUnityContainer unity, params Type[] types) {
+                this.container = unity;
+                this.types = types ?? Enumerable.Empty<Type>();
+            }
+
+            public override Func<Type, IEnumerable<Type>> GetFromTypes() {
+                return t => {
+                    var ifs = t.GetInterfaces();
+                    //多个接口可以对应同一个实现
+                    var ais = t.GetCustomAttributes<AutoInjectionAttribute>()
+                                .Select(a => a.Interface);
+                    var results = new List<Type>();
+                    foreach (var i in ais) {
+                        if (ifs.Contains(i))
+                            results.Add(i);
+                    }
+                    return results;
+                };
+            }
+
+            public override Func<Type, IEnumerable<InjectionMember>> GetInjectionMembers() {
+                return (x => Enumerable.Empty<InjectionMember>());
+            }
+
+            public override Func<Type, LifetimeManager> GetLifetimeManager() {
+                return (WithLifetime.ContainerControlled);
+            }
+
+            public override Func<Type, String> GetName() {
+                return t => WithName.Default(t);
+            }
+
+            public override IEnumerable<Type> GetTypes() {
+                var types = this.types.Where(t =>
+                    t.IsPublic &&
+                    t.GetInterfaces().Count() > 0 &&
+                    !t.IsAbstract &&
+                    t.IsClass &&
+                    t.GetCustomAttributes<AutoInjectionAttribute>(false).Count() > 0);
+
+                return types;
+            }
         }
     }
 }

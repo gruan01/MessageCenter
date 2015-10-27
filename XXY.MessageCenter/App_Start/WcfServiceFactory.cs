@@ -1,4 +1,4 @@
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace XXY.MessageCenter {
 
         protected override void ConfigureContainer(IUnityContainer container) {
             container.LoadConfiguration();
-            //UnityConfig.RegisterTypes(container);
+            UnityConfig.RegisterTypes(container);
         }
     }
 }
