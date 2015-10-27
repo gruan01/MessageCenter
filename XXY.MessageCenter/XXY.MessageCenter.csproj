@@ -168,6 +168,13 @@
     <Reference Include="XXY.UC.BizEntity">
       <HintPath>..\dll\XXY.UC.BizEntity.dll</HintPath>
     </Reference>
+    <Reference Include="XXY.UC.DbEntity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\XXY.UC.DbEntity.dll</HintPath>
+    </Reference>
+    <Reference Include="XXY.UC.IService">
+      <HintPath>..\dll\XXY.UC.IService.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BaseController.cs" />
@@ -185,6 +192,8 @@
     <Compile Include="App_Start\ViewEngineSetting.cs" />
     <Compile Include="App_Start\WcfServiceFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="ExceptionHandlers\ArgumentExceptionHandler.cs" />
     <Compile Include="ExceptionHandlers\BaseExceptionHandler.cs" />
     <Compile Include="ExceptionHandlers\DataRepeatExceptionHandler.cs" />
@@ -388,6 +397,8 @@
     <Content Include="Views\Shared\Tpl\TextareaBlock.cshtml" />
     <Content Include="Views\Shared\Tpl\TextBlock.cshtml" />
     <Content Include="Views\Shared\_SubPageLayout.cshtml" />
+    <Content Include="Views\Template\Create.cshtml" />
+    <Content Include="Views\Template\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -400,6 +411,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XXY.MessageCenter.BizEntity\XXY.MessageCenter.BizEntity.csproj">
+      <Project>{0210de26-a9e4-4e34-adb3-5cf6a04f2ea6}</Project>
+      <Name>XXY.MessageCenter.BizEntity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XXY.MessageCenter.Biz\XXY.MessageCenter.Biz.csproj">
       <Project>{b9b21b48-d562-42c7-a284-81681bce6b09}</Project>
       <Name>XXY.MessageCenter.Biz</Name>
