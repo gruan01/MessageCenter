@@ -10,6 +10,8 @@ using XXY.MessageCenter.DbContext;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.Common.Extends;
+using XXY.MessageCenter.BizEntity.Conditions;
+using XXY.MessageCenter.IBiz;
 
 namespace XXY.MessageCenter.Biz {
 

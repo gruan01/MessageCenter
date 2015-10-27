@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XXY.MessageCenter.Biz;
+using XXY.MessageCenter.IBiz;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.IService;
 

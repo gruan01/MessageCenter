@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XXY.MessageCenter.BizEntity;
+using XXY.MessageCenter.BizEntity.Conditions;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 
-namespace XXY.MessageCenter.Biz {
+namespace XXY.MessageCenter.IBiz {
 
     /// <summary>
     /// 模板

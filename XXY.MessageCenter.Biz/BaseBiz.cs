@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XXY.MessageCenter.DbEntity;
+using XXY.MessageCenter.IBiz;
 using XXY.UC.BizEntity;
 
 namespace XXY.MessageCenter.Biz {

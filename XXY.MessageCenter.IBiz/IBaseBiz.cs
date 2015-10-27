@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XXY.MessageCenter.Biz {
+namespace XXY.MessageCenter.IBiz {
     public interface IBaseBiz {
         bool HasError {
             get;

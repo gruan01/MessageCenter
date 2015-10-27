@@ -8,8 +8,7 @@ using XXY.Common.Attributes;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 
-namespace XXY.MessageCenter.BizEntity
-{
+namespace XXY.MessageCenter.BizEntity.Conditions {
     public class TemplateSearchCondition : BaseQuery<Template> {
 
         [MapTo("Code", IgnoreCase = true, Opt = MapToOpts.Include)]
