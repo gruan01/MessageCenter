@@ -40,7 +40,7 @@ namespace XXY.MessageCenter.Controllers {
 
         [HttpPost]
         public async Task<ActionResult> Create(
-            [Bind(Include = "AppCode,Code,Lang,Subject,Ctx,IsDefault")]
+            [Bind(Include = "AppCode,Code,Lang,MsgType,Subject,Ctx,IsDefault")]
             Template template
             ) {
             await this.Biz.Value.Create(template);
@@ -82,7 +82,7 @@ namespace XXY.MessageCenter.Controllers {
 
         [HttpPost]
         public async Task<ActionResult> Edit(int id,
-            [Bind(Include = "AppCode,Code,Lang,Subject,Ctx,IsDefault")]
+            [Bind(Include = "AppCode,Code,Lang,MsgType,Subject,Ctx,IsDefault")]
             Template template) {
             await this.Biz.Value.Edit(id, template);
             if (!this.Biz.Value.HasError) {

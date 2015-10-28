@@ -1,0 +1,3 @@
+﻿Enable-Migrations -ProjectName XXY.MessageCenter.DbContext -StartUpProjectName XXY.MessageCenter
+Add-Migration -Name Template -ProjectName XXY.MessageCenter.DbContext -StartUpProjectName XXY.MessageCenter
+Update-Database -ProjectName XXY.MessageCenter.DbContext -StartUpProjectName XXY.MessageCenter -verbose

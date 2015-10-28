@@ -42,7 +42,11 @@ namespace XXY.MessageCenter.Service {
                     if (client != null) {
                         //await client.Value.Send(msg);
                         dynamic c = client.Value;
-                        await c.Send(msg);
+                        try {
+                            await c.Send(msg);
+                        } catch (Exception ex) {
+
+                        }
                     }
                 }
             }

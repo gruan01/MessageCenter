@@ -18,7 +18,7 @@ namespace XXY.MessageCenter.DbContext {
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-            modelBuilder.HasDefaultSchema("MAIL");
+            modelBuilder.HasDefaultSchema("MESSAGECENTER");
 
             modelBuilder.Conventions.Add(new OracleConversion());
             base.OnModelCreating(modelBuilder);
@@ -39,12 +39,12 @@ namespace XXY.MessageCenter.DbContext {
             set;
         }
 
-        public DbSet<QQMessage> QqMessages {
+        public DbSet<QQMessage> QQMessages {
             get;
             set;
         }
 
-        public DbSet<SMSMessage> SmsMessages {
+        public DbSet<SMSMessage> SMSMessages {
             get;
             set;
         }

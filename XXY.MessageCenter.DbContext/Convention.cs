@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 namespace XXY.MessageCenter.DbContext {
     public class OracleConversion : Convention {
 
-        private static readonly Regex ConvertRx = new Regex(@"(([a-zA-Z][a-z]+)|(\d\d*)|[A-Za-z]+)");
+        //private static readonly Regex ConvertRx = new Regex(@"(([a-zA-Z][a-z]+)|(\d\d*)|[A-Za-z]+)");
+        private static readonly Regex ConvertRx = new Regex(@"(([A-Z]+(?![a-z\d_]))|([A-Z][a-z]+)|[a-z]+|\d+)");
+
 
         public OracleConversion() {
             this.Properties().Configure(p => {

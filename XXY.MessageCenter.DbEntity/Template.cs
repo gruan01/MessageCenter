@@ -20,6 +20,12 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
         [Index]
+        public MsgTypes MsgType {
+            get;
+            set;
+        }
+
+        [Index]
         public Langs Lang {
             get;
             set;

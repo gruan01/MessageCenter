@@ -18,10 +18,11 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        @Html.DropDownBlockFor(m => m.AppCode, datas.AppCodes(), "col-xs-3", htmlAttributes: attr)
-        @Html.TextBlockFor(m => m.Code, "col-xs-3", htmlAttributes: attr)
-        @Html.EnumDropDownListBlockFor(m => m.Lang, typeof(Langs), "col-xs-3", htmlAttributes: attr)
-        @Html.CheckboxBlockFor(m => m.IsDefault, false, "col-xs-3")
+        @Html.DropDownBlockFor(m => m.AppCode, datas.AppCodes(), "col-xs-2", htmlAttributes: attr)
+        @Html.TextBlockFor(m => m.Code, "col-xs-2", htmlAttributes: attr)
+        @Html.EnumDropDownListBlockFor(m => m.Lang, typeof(Langs), "col-xs-2", htmlAttributes: attr)
+        @Html.EnumDropDownListBlockFor(m => m.MsgType, typeof(MsgTypes), "col-xs-2", htmlAttributes: attr)
+        @Html.CheckboxBlockFor(m => m.IsDefault, false, "col-xs-2")
 
         @Html.TextBlockFor(m => m.Subject, "col-xs-12")
         @Html.TextareaBlockFor(m => m.Ctx, 20, "col-xs-12")

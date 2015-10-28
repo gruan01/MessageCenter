@@ -60,6 +60,15 @@
   <ItemGroup>
     <Compile Include="Convention.cs" />
     <Compile Include="Entities.cs" />
+    <Compile Include="Migrations\201510280254202_Init.cs" />
+    <Compile Include="Migrations\201510280254202_Init.Designer.cs">
+      <DependentUpon>201510280254202_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510280331590_TemplateAddMsgType.cs" />
+    <Compile Include="Migrations\201510280331590_TemplateAddMsgType.Designer.cs">
+      <DependentUpon>201510280331590_TemplateAddMsgType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +80,17 @@
       <Project>{891d1f0f-ee9f-4cc4-a2dd-ae7ee8a1108d}</Project>
       <Name>XXY.MessageCenter.DbEntity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="数据迁移.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510280254202_Init.resx">
+      <DependentUpon>201510280254202_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510280331590_TemplateAddMsgType.resx">
+      <DependentUpon>201510280331590_TemplateAddMsgType.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

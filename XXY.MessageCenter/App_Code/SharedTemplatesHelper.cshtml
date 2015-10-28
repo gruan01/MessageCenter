@@ -60,12 +60,12 @@
 @helper SearchBtnBlock(string className = "col-xs-2") {
     <div class="@className">
         <span class="help-block">&nbsp;</span>
-        <input type="submit" class="btn btn-sm btn-primary" id="btn_Search" value="@XXY.Mail.Res.StaticRes.Search" />
+        <input type="submit" class="btn btn-sm btn-primary" id="btn_Search" value="@XXY.MessageCenter.Res.StaticRes.Search" />
     </div>
 }
 
 @helper ReturnToListBtn(System.Web.Mvc.UrlHelper url, string className = "") {
-    <input type="button" onclick="IndexPageHelper.GoToIndex('@url.Action("Index")')" class="btn btn-default" value="@XXY.Mail.Res.StaticRes.BackToList" />
+    <input type="button" onclick="IndexPageHelper.GoToIndex('@url.Action("Index")')" class="btn btn-default" value="@XXY.MessageCenter.Res.StaticRes.BackToList" />
 }
 
 @helper ReturnToListBtn(System.Web.Mvc.UrlHelper url, string actionName, object routeValues, string className = "")
@@ -74,5 +74,5 @@
     routeValues = routeValues ?? new {
     };
 
-    <input type="button" onclick="IndexPageHelper.GoToIndex('@url.Action(actionName, routeValues )')" class="btn btn-default" value="@XXY.Mail.Res.StaticRes.BackToList" />
+    <input type="button" onclick="IndexPageHelper.GoToIndex('@url.Action(actionName, routeValues )')" class="btn btn-default" value="@XXY.MessageCenter.Res.StaticRes.BackToList" />
 }

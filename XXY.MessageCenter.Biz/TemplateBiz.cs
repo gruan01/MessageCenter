@@ -48,7 +48,8 @@ namespace XXY.MessageCenter.Biz {
                         Lang = lang,
                         Ctx = entry.Ctx,
                         Subject = entry.Subject,
-                        IsDefault = entry.IsDefault
+                        IsDefault = entry.IsDefault,
+                        MsgType = entry.MsgType
                     };
                     this.SetCreateInfo(template);
                     db.Templates.Add(template);
@@ -67,6 +68,7 @@ namespace XXY.MessageCenter.Biz {
                     if (ex != null) {
                         entry.CopyToOnly(ex,
                             p => p.Code, p => p.AppCode, p => p.Lang,
+                            p => p.MsgType,
                             p => p.Ctx, p => p.Subject,
                             p => p.IsDefault
                             );
