@@ -29,6 +29,12 @@ namespace XXY.MessageCenter.BizEntity.Conditions {
             set;
         }
 
+        [MapTo("MsgTpye")]
+        public MsgTypes? MsgType {
+            get;
+            set;
+        }
+
 
         [MapTo("Subject", Opt = MapToOpts.Include, IgnoreCase = true)]
         public string Subject {

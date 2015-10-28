@@ -19,7 +19,7 @@ namespace XXY.MessageCenter.IBiz {
 
         Task Edit(int id, Template entry);
 
-        Template GetByCode(string code, string appCode, Langs? lang);
+        Template GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang);
 
         IEnumerable<Template> Search(TemplateSearchCondition cond);
     }

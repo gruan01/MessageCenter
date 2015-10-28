@@ -17,7 +17,7 @@ namespace XXY.MessageCenter.Biz {
 
     [AutoInjection(typeof(ITemplate))]
     public class TemplateBiz : BaseBiz, ITemplate {
-        public Template GetByCode(string code, string appCode, Langs? lang) {
+        public Template GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang) {
             code = code.ToUpper().Trim();
             appCode = appCode.ToUpper();
 
@@ -26,6 +26,7 @@ namespace XXY.MessageCenter.Biz {
                     !t.IsDeleted
                     && t.Code.ToUpper() == code
                     && t.AppCode.ToUpper() == appCode
+                    && t.MsgType == msgType
                     && ((lang != null && t.Lang == lang.Value) || (lang == null && t.IsDefault))
                     );
 
