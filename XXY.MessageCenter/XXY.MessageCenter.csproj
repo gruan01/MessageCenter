@@ -403,6 +403,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\lang.en-US.js" />
     <Content Include="Scripts\Lang.zh-CN.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -489,9 +491,17 @@
       <Project>{290ef4f3-652c-4c3c-b071-38302ffff292}</Project>
       <Name>XXY.MessageCenter.IBiz</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XXY.MessageCenter.IService\XXY.MessageCenter.IService.csproj">
+      <Project>{f6f13880-1044-4f75-bb23-b244de6cc12d}</Project>
+      <Name>XXY.MessageCenter.IService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XXY.MessageCenter.Res\XXY.MessageCenter.Res.csproj">
       <Project>{09d7a2ad-5ae5-4ca8-8804-c51397d1a641}</Project>
       <Name>XXY.MessageCenter.Res</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXY.MessageCenter.ServiceImpl\XXY.MessageCenter.ServiceImpl.csproj">
+      <Project>{8d171ce9-b046-4568-81f5-477bfcc4e983}</Project>
+      <Name>XXY.MessageCenter.ServiceImpl</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -7,6 +7,7 @@ using System.Reflection;
 using Microsoft.Practices.ObjectBuilder2;
 using XXY.Common.Attributes;
 using XXY.MessageCenter.Biz;
+using XXY.MessageCenter.ServiceImpl;
 
 
 namespace XXY.MessageCenter {
@@ -32,6 +33,7 @@ namespace XXY.MessageCenter {
 
             var conv = new Convention(container,
                 typeof(BaseBiz).Assembly,
+                typeof(TemplateServiceImpl).Assembly,
                 Assembly.GetExecutingAssembly()
                 );
 

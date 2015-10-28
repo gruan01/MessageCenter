@@ -10,6 +10,12 @@
     //    };
     //}
     var datas = PageDatas.GetInstance();
+
+    var langs = Enum.GetNames(typeof(Langs));
+    //var templates = Enum.GetNames(typeof(MsgTypes))
+    //    .ToDictionary(t => t, t => {
+    //        return langs.ToDictionary(l=>l, l=> "");
+    //    });
 }
 
 @if (isEdit) {
@@ -45,8 +51,10 @@
 
 @section scripts{
     @Scripts.Render(BundleConfig.CKEditor)
+    @Scripts.Render(BundleConfig.Knockout)
 
-    <script>
-        CKEDITOR.replace('Ctx');
-    </script>
+        <script>
+            @*var templates = @Html.Raw(JsonConvert.SerializeObject(templates));*@
+            CKEDITOR.replace('Ctx');
+        </script>
 }

@@ -54,7 +54,7 @@ namespace XXY.MessageCenter {
                 "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle(Respond).Include("~/Scripts/respond.js"));
-            bundles.Add(new ScriptBundle(Knockout).Include("~/Scripts/knockout-3.3.0.js"));
+            bundles.Add(new ScriptBundle(Knockout).Include("~/Scripts/knockout-{version}.js"));
             bundles.Add(new ScriptBundle(NewSelector).Include("~/Scripts/NewSelector.js"));
             bundles.Add(new ScriptBundle(DateTimePicker).Include("~/Scripts/jquery.datetimepicker.js"));
             bundles.Add(new StyleBundle(DateTimePickerCss).Include("~/Content/jquery.datetimepicker.css"));

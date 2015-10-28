@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 using XXY.MessageCenter.IBiz;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.IService;
+using XXY.Common.Attributes;
 
 namespace XXY.MessageCenter.ServiceImpl {
+
+    [AutoInjection(typeof(ITemplateService))]
     public class TemplateServiceImpl : ITemplateService {
 
         [Dependency]
