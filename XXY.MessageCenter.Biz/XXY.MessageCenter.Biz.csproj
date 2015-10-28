@@ -76,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBiz.cs" />
+    <Compile Include="BaseMessageHandler.cs" />
+    <Compile Include="EmailMessageHandler.cs" />
+    <Compile Include="QueueBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateBiz.cs" />
   </ItemGroup>
@@ -95,6 +98,10 @@
     <ProjectReference Include="..\XXY.MessageCenter.IBiz\XXY.MessageCenter.IBiz.csproj">
       <Project>{290ef4f3-652c-4c3c-b071-38302ffff292}</Project>
       <Name>XXY.MessageCenter.IBiz</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XXY.MessageCenter.Msmq\XXY.MessageCenter.Msmq.csproj">
+      <Project>{d241c2c3-7d15-43fb-ac94-1ba904a2eb03}</Project>
+      <Name>XXY.MessageCenter.Msmq</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

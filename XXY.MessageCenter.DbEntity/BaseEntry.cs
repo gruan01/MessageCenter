@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XXY.MessageCenter.DbEntity {
+
+    [Serializable, DataContract]
     public abstract class BaseEntity {
 
         [Key, Column("ID", Order = 0)]
@@ -16,11 +19,12 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
-        
+
         public DateTime CreateOn {
             get;
             set;
         }
+
 
         [StringLength(20)]
         public string CreateByUserName {
@@ -33,16 +37,19 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+
         public DateTime? ModifyOn {
             get;
             set;
         }
+
 
         [StringLength(20)]
         public string ModifyByUserName {
             get;
             set;
         }
+
 
         public decimal? ModifyByUserID {
             get;

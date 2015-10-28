@@ -25,7 +25,7 @@ namespace XXY.MessageCenter.Service {
 
         public bool Start(HostControl hostControl) {
             this.Holder.OnDataReceived += Holder_OnDataReceived;
-            this.Holder.Listen(typeof(BaseEntity));
+            this.Holder.Listen();
             return true;
         }
 

@@ -24,32 +24,34 @@ namespace XXY.MessageCenter.Msmq {
             this.QueuePath = path;
         }
 
-        private MessageQueue GetQueue(Type dataType) {
+        private MessageQueue GetQueue() {
             //远程队列无法确定是不是存在。
             //"无法确定具有指定格式名的队列是否存在,
             //只能保证这个队列一定存在。
             var queue = new MessageQueue(this.QueuePath);
-            queue.Formatter = new JsonMessageFormater(dataType);
+            queue.Formatter = new JsonMessageFormater(typeof(T));
             return queue;
         }
 
 
-        public void Put(T data) {
+        public bool Put(T data) {
             using (var trans = new MessageQueueTransaction())
-            using (var mq = this.GetQueue(typeof(T))) {
+            using (var mq = this.GetQueue()) {
                 trans.Begin();
                 try {
                     mq.Send(data, trans);
                     trans.Commit();
+                    return true;
                 } catch (Exception ex) {
                     Console.WriteLine(ex.Message);
                     trans.Abort();
+                    return false;
                 }
             }
         }
 
-        public void Listen(Type dataType) {
-            var mq = this.GetQueue(dataType);
+        public void Listen() {
+            var mq = this.GetQueue();
             mq.PeekCompleted += mq_PeekCompleted;
             mq.BeginPeek();
         }

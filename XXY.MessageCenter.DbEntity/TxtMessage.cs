@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
+        [DataMember]
         [Required, StringLength(100)]
         public string Subject {
             get;
@@ -28,6 +30,7 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        [DataMember]
         [Required, StringLength(20)]
         public string Sender {
             get;
@@ -39,6 +42,7 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        [DataMember]
         public decimal ReceiverID {
             get;
             set;

@@ -53,5 +53,13 @@ namespace XXY.MessageCenter.DbContext {
             get;
             set;
         }
+
+        /// <summary>
+        /// 站内信息
+        /// </summary>
+        public DbSet<TxtMessage> TxtMessages {
+            get;
+            set;
+        }
     }
 }

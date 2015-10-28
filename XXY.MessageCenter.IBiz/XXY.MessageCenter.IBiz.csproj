@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBaseBiz.cs" />
+    <Compile Include="IConfig.cs" />
     <Compile Include="ICurrentUser.cs" />
+    <Compile Include="IQueue.cs" />
     <Compile Include="ITemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

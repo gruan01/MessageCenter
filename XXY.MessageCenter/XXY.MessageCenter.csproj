@@ -197,6 +197,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BaseController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\Config.cs" />
     <Compile Include="App_Start\CurrentUserBiz.cs" />
     <Compile Include="App_Start\DisplayModel.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
