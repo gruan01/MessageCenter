@@ -7,12 +7,26 @@ using System.Threading.Tasks;
 using Topshelf;
 using System.ComponentModel.Composition;
 using XXY.MessageCenter.Common;
+using XXY.MessageCenter.DbEntity;
+using System.Configuration;
 
 
 namespace XXY.MessageCenter.Service {
+
     class Program {
+
+        private static readonly List<Type> SupportDataTypes = new List<Type>() {
+            typeof(EMailMessage),
+            typeof(SMSMessage),
+            typeof(QQMessage),
+            typeof(WeChatMessage)
+        };
+
+        private static string QueuePath = ConfigurationManager.AppSettings.Get("MSMQPath");
+
         static void Main(string[] args) {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             HostFactory.Run((x) => {
                 x.StartAutomaticallyDelayed();
                 x.RunAsLocalSystem();
@@ -22,7 +36,7 @@ namespace XXY.MessageCenter.Service {
                 x.SetServiceName("XXY.MessageCenter");
 
                 x.Service(s => {
-                    var server = new Server();
+                    var server = new Server(QueuePath, SupportDataTypes);
                     var catalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
                     var container = new CompositionContainer(catalog);
                     container.ComposeParts(server);

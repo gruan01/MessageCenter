@@ -6,7 +6,7 @@ using System.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XXY.MessageCenter.Msmq {
+namespace XXY.MessageCenter.Queue {
     public class JsonMessageFormater : IMessageFormatter {
         [ThreadStatic]
         private static byte[] mBuffer;

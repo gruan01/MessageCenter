@@ -7,8 +7,8 @@
     <ProjectGuid>{D241C2C3-7D15-43FB-AC94-1BA904A2EB03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XXY.MessageCenter.Msmq</RootNamespace>
-    <AssemblyName>XXY.MessageCenter.Msmq</AssemblyName>
+    <RootNamespace>XXY.MessageCenter.Queue</RootNamespace>
+    <AssemblyName>XXY.MessageCenter.Queue</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AllPropertiesResolver.cs" />
     <Compile Include="JsonMessageFormater.cs" />
+    <Compile Include="Priorities.cs" />
     <Compile Include="QueueHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

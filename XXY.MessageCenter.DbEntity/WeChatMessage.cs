@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -20,6 +21,13 @@ namespace XXY.MessageCenter.DbEntity {
         public WeChatMessage()
             : base(Enums.MsgTypes.WeChat) {
 
+        }
+
+
+        [Required, StringLength(100)]
+        new public string Receiver {
+            get;
+            set;
         }
 
     }

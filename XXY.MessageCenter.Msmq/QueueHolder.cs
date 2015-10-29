@@ -6,22 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace XXY.MessageCenter.Msmq {
-    public class QueueHolder<T> {
+namespace XXY.MessageCenter.Queue {
+    public class QueueHolder {
 
         public string QueuePath {
             get;
             private set;
         }
 
+        private IEnumerable<Type> SupportDataTypes {
+            get;
+            set;
+        }
+
+
         public event EventHandler<DataReceivedArgs> OnDataReceived = null;
 
-        public QueueHolder(string path) {
+        public QueueHolder(string path, IEnumerable<Type> supportDataTypes) {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentNullException("path");
+            if (supportDataTypes == null || supportDataTypes.Count() == 0)
+                throw new ArgumentException("supportTypes");
+
 
 
             this.QueuePath = path;
+            this.SupportDataTypes = supportDataTypes;
         }
 
         private MessageQueue GetQueue() {
@@ -29,20 +39,43 @@ namespace XXY.MessageCenter.Msmq {
             //"无法确定具有指定格式名的队列是否存在,
             //只能保证这个队列一定存在。
             var queue = new MessageQueue(this.QueuePath);
-            //queue.Formatter = new JsonMessageFormater(typeof(T));
-            //queue.Formatter = new ProtoBufFormatter(typeof(T));
             return queue;
         }
 
 
-        public bool Put(T data) {
+        private MessagePriority ConvertPriority(Priorities pri) {
+            switch (pri) {
+                case Priorities.Higher:
+                    return MessagePriority.High;
+                case Priorities.Immediately:
+                    return MessagePriority.Highest;
+                case Priorities.Lower:
+                    return MessagePriority.Low;
+                default:
+                    return MessagePriority.Normal;
+            }
+        }
+
+
+        public bool Put(object data, Priorities pri = Priorities.Normal) {
+            if (!this.SupportDataTypes.Contains(data.GetType())) {
+                throw new ArgumentException("Not Support data type");
+            }
+
+
             using (var trans = new MessageQueueTransaction())
             using (var mq = this.GetQueue()) {
                 trans.Begin();
                 try {
-                    mq.Formatter = new JsonMessageFormater(data.GetType());
+                    //mq.Formatter = new JsonMessageFormater(data.GetType());
                     //mq.Formatter = new ProtoBufFormatter(data.GetType());
-                    mq.Send(data, trans);
+                    var msg = new Message(data);
+                    msg.Formatter = new JsonMessageFormater(data.GetType());
+                    msg.Label = data.GetType().FullName;
+                    msg.Priority = this.ConvertPriority(pri);
+                    msg.Recoverable = true;
+                    
+                    mq.Send(msg, trans);
                     trans.Commit();
                     return true;
                 } catch (Exception ex) {
@@ -61,15 +94,19 @@ namespace XXY.MessageCenter.Msmq {
 
         void mq_PeekCompleted(object sender, PeekCompletedEventArgs e) {
             var queue = (MessageQueue)sender;
-            queue.Formatter = new JsonMessageFormater(typeof(T));
-            //queue.Formatter = new ProtoBufFormatter(typeof(T));
-            using (var transaction = new TransactionScope()) {
-                var msg = queue.EndPeek(e.AsyncResult);
-                if (this.OnDataReceived != null)
-                    this.OnDataReceived(null, new DataReceivedArgs(msg.Body));
 
-                queue.ReceiveById(e.Message.Id, MessageQueueTransactionType.Automatic);
-                transaction.Complete();
+            var type = this.SupportDataTypes.FirstOrDefault(t => t.FullName.Equals(e.Message.Label));
+            if (type != null) {
+                queue.Formatter = new JsonMessageFormater(type);
+                //queue.Formatter = new ProtoBufFormatter(typeof(T));
+                using (var transaction = new TransactionScope()) {
+                    var msg = queue.EndPeek(e.AsyncResult);
+                    if (this.OnDataReceived != null)
+                        this.OnDataReceived(null, new DataReceivedArgs(msg.Body));
+
+                    queue.ReceiveById(e.Message.Id, MessageQueueTransactionType.Automatic);
+                    transaction.Complete();
+                }
             }
             queue.BeginPeek();
         }

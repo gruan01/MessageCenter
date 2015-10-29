@@ -7,13 +7,13 @@ namespace XXY.MessageCenter.DbContext.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class MessageNotNeedLang : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MessageNotNeedLang));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201510280855510_MessageNotNeedLang"; }
+            get { return "201510290914359_Init"; }
         }
         
         string IMigrationMetadata.Source

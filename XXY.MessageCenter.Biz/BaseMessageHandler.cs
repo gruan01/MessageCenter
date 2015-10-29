@@ -10,12 +10,19 @@ using XXY.Common.Extends;
 using System.Data.Entity;
 using Microsoft.Practices.Unity;
 using XXY.MessageCenter.IBiz;
-using XXY.MessageCenter.Msmq;
+using XXY.MessageCenter.Queue;
 using Microsoft.Practices.ServiceLocation;
 
 namespace XXY.MessageCenter.Biz {
 
     public abstract class BaseMessageHandler : BaseBiz {
+
+        public static readonly List<Type> SupportDataTypes = new List<Type>() {
+            typeof(EMailMessage),
+            typeof(SMSMessage),
+            typeof(QQMessage),
+            typeof(WeChatMessage)
+        };
 
         public Lazy<IConfig> Config {
             get;
@@ -46,15 +53,40 @@ namespace XXY.MessageCenter.Biz {
 
     public abstract class BaseMessageHandler<T> : BaseMessageHandler where T : BaseMessage {
 
-        protected abstract Task<bool> Save();
+        protected async virtual Task<bool> Save() {
+            using (var db = new Entities()) {
+                db.Set<T>().Add((T)this.Msg);
+                this.Errors = db.GetErrors();
+                if (!this.HasError) {
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+        }
 
         public async override Task<bool> Handle() {
-            var holder = new QueueHolder<T>(this.Config.Value.MessageMSMQPath);
+            var holder = new QueueHolder(this.Config.Value.MessageMSMQPath, SupportDataTypes);
             this.SetCreateInfo(this.Msg);
             if (await this.Save())
-                return holder.Put((T)this.Msg);
+                return holder.Put((T)this.Msg, this.ConvertPriority(this.Msg.PRI));
             else
                 return false;
+        }
+
+        private Queue.Priorities ConvertPriority(XXY.MessageCenter.DbEntity.Enums.Priorities pri) {
+            switch (pri) {
+                case DbEntity.Enums.Priorities.Normal:
+                    return Queue.Priorities.Normal;
+                case DbEntity.Enums.Priorities.Lower:
+                    return Queue.Priorities.Lower;
+                case DbEntity.Enums.Priorities.Immediately:
+                    return Queue.Priorities.Immediately;
+                case DbEntity.Enums.Priorities.Higher:
+                    return Queue.Priorities.Higher;
+                default:
+                    return Queue.Priorities.Normal;
+            }
         }
     }
 
@@ -76,9 +108,20 @@ namespace XXY.MessageCenter.Biz {
                 case MsgTypes.Txt:
                     handler = new TxtMessageHandler();
                     break;
+                case MsgTypes.QQ:
+                    handler = new QQMessageHandler();
+                    break;
+                case MsgTypes.SMS:
+                    handler = new SmsMessageHandler();
+                    break;
+                case MsgTypes.WeChat:
+                    handler = new WeChatMessageHandler();
+                    break;
             }
 
-            handler.Msg = msg;
+
+            if (handler != null)
+                handler.Msg = msg;
             return handler;
         }
     }
@@ -91,41 +134,20 @@ namespace XXY.MessageCenter.Biz {
 
 
     public class EmailMessageHandler : BaseMessageHandler<EMailMessage> {
-        protected async override Task<bool> Save() {
-            using (var db = new Entities()) {
-                db.EmailMessages.Add((EMailMessage)this.Msg);
-                this.Errors = db.GetErrors();
-                if (!this.HasError) {
-                    await db.SaveChangesAsync();
-                    return true;
-                }
-                return false;
-            }
-        }
     }
 
-
-
-
-
-
-
     public class TxtMessageHandler : BaseMessageHandler<TxtMessage> {
-
-        protected async override Task<bool> Save() {
-            using (var db = new Entities()) {
-                db.TxtMessages.Add((TxtMessage)this.Msg);
-                this.Errors = db.GetErrors();
-                if (!this.HasError) {
-                    await db.SaveChangesAsync();
-                    return true;
-                }
-                return false;
-            }
-        }
-
         public override async Task<bool> Handle() {
             return await this.Save();
         }
+    }
+
+    public class SmsMessageHandler : BaseMessageHandler<SMSMessage> {
+    }
+
+    public class QQMessageHandler : BaseMessageHandler<QQMessage> {
+    }
+
+    public class WeChatMessageHandler : BaseMessageHandler<WeChatMessage> {
     }
 }

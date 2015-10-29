@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,7 +15,7 @@ namespace XXY.MessageCenter.DbEntity {
     [Serializable, DataContract]
     [JsonObject(MemberSerialization.OptOut)]
     [ProtoContract(AsReferenceDefault = true, ImplicitFields = ImplicitFields.AllFields)]
-    public /*abstract*/ class BaseMessage : BaseEntity {
+    public abstract class BaseMessage : BaseEntity {
 
         [NotMapped]
         public MsgTypes MsgType {
@@ -40,12 +41,13 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        [Required]
         public string Ctx {
             get;
             set;
         }
 
-
+        [Required]
         public string Receiver {
             get;
             set;

@@ -49,5 +49,17 @@ namespace XXY.MessageCenter.DbEntity {
             get;
             set;
         }
+
+        [Required, StringLength(20)]
+        new public string Receiver {
+            get;
+            set;
+        }
+
+        [Required, StringLength(1000)]
+        new public string Ctx {
+            get;
+            set;
+        }
     }
 }

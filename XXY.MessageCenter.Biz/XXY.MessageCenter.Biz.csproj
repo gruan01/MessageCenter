@@ -103,9 +103,9 @@
       <Project>{290ef4f3-652c-4c3c-b071-38302ffff292}</Project>
       <Name>XXY.MessageCenter.IBiz</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XXY.MessageCenter.Msmq\XXY.MessageCenter.Msmq.csproj">
+    <ProjectReference Include="..\XXY.MessageCenter.Msmq\XXY.MessageCenter.Queue.csproj">
       <Project>{d241c2c3-7d15-43fb-ac94-1ba904a2eb03}</Project>
-      <Name>XXY.MessageCenter.Msmq</Name>
+      <Name>XXY.MessageCenter.Queue</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

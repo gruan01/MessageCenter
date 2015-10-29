@@ -12,7 +12,7 @@ using XXY.MessageCenter.DbContext;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.IBiz;
-using XXY.MessageCenter.Msmq;
+using XXY.MessageCenter.Queue;
 
 namespace XXY.MessageCenter.Biz {
 

@@ -57,6 +57,7 @@
       <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -87,9 +88,9 @@
       <Project>{891d1f0f-ee9f-4cc4-a2dd-ae7ee8a1108d}</Project>
       <Name>XXY.MessageCenter.DbEntity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XXY.MessageCenter.Msmq\XXY.MessageCenter.Msmq.csproj">
+    <ProjectReference Include="..\XXY.MessageCenter.Msmq\XXY.MessageCenter.Queue.csproj">
       <Project>{d241c2c3-7d15-43fb-ac94-1ba904a2eb03}</Project>
-      <Name>XXY.MessageCenter.Msmq</Name>
+      <Name>XXY.MessageCenter.Queue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

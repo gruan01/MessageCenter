@@ -60,21 +60,9 @@
   <ItemGroup>
     <Compile Include="Convention.cs" />
     <Compile Include="Entities.cs" />
-    <Compile Include="Migrations\201510280254202_Init.cs" />
-    <Compile Include="Migrations\201510280254202_Init.Designer.cs">
-      <DependentUpon>201510280254202_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510280331590_TemplateAddMsgType.cs" />
-    <Compile Include="Migrations\201510280331590_TemplateAddMsgType.Designer.cs">
-      <DependentUpon>201510280331590_TemplateAddMsgType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510280855510_MessageNotNeedLang.cs" />
-    <Compile Include="Migrations\201510280855510_MessageNotNeedLang.Designer.cs">
-      <DependentUpon>201510280855510_MessageNotNeedLang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510290338053_CreateUserNameRequired.cs" />
-    <Compile Include="Migrations\201510290338053_CreateUserNameRequired.Designer.cs">
-      <DependentUpon>201510290338053_CreateUserNameRequired.cs</DependentUpon>
+    <Compile Include="Migrations\201510290914359_Init.cs" />
+    <Compile Include="Migrations\201510290914359_Init.Designer.cs">
+      <DependentUpon>201510290914359_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,17 +81,8 @@
     <Content Include="数据迁移.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510280254202_Init.resx">
-      <DependentUpon>201510280254202_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510280331590_TemplateAddMsgType.resx">
-      <DependentUpon>201510280331590_TemplateAddMsgType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510280855510_MessageNotNeedLang.resx">
-      <DependentUpon>201510280855510_MessageNotNeedLang.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510290338053_CreateUserNameRequired.resx">
-      <DependentUpon>201510290338053_CreateUserNameRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201510290914359_Init.resx">
+      <DependentUpon>201510290914359_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

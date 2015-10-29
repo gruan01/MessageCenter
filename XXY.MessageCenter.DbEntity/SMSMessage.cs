@@ -2,6 +2,7 @@
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -19,6 +20,18 @@ namespace XXY.MessageCenter.DbEntity {
 
         public SMSMessage()
             : base(Enums.MsgTypes.SMS) {
+        }
+
+        [Required, StringLength(20)]
+        new public string Receiver {
+            get;
+            set;
+        }
+
+        [Required, StringLength(200)]
+        new public string Ctx {
+            get;
+            set;
         }
     }
 }

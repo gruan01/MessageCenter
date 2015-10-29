@@ -1,26 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Topshelf;
 using XXY.MessageCenter.Common;
 using XXY.MessageCenter.DbEntity;
-using XXY.MessageCenter.Msmq;
+using XXY.MessageCenter.DbEntity.Enums;
+using XXY.MessageCenter.Queue;
 
 namespace XXY.MessageCenter.Service {
 
     public class Server : ServiceControl {
 
-        public static readonly string QueuePath = @"FormatName:DIRECT=OS:xling\Private$\XXY.Mail";
 
-        private QueueHolder<EMailMessage> Holder = new QueueHolder<EMailMessage>(QueuePath);
+
+        private QueueHolder Holder = null;
 
         [ImportMany]
         public IEnumerable<Lazy<IMessageClient>> Clients {
             get;
             set;
+        }
+
+        public Server(string queuePath, IEnumerable<Type> supportDataTypes) {
+            this.Holder = new QueueHolder(queuePath, supportDataTypes);
         }
 
         public bool Start(HostControl hostControl) {

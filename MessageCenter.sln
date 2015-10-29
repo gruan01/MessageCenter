@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XXY.MessageCenter", "XXY.Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XXY.MessageCenter.Tests", "XXY.MessageCenter.Tests\XXY.MessageCenter.Tests.csproj", "{ED1C62F9-2643-49ED-9DDC-68D44D6DEDF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XXY.MessageCenter.Msmq", "XXY.MessageCenter.Msmq\XXY.MessageCenter.Msmq.csproj", "{D241C2C3-7D15-43FB-AC94-1BA904A2EB03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XXY.MessageCenter.Queue", "XXY.MessageCenter.Msmq\XXY.MessageCenter.Queue.csproj", "{D241C2C3-7D15-43FB-AC94-1BA904A2EB03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0874C6FC-013B-4FAD-8E0F-94CB7F404547}"
 	ProjectSection(SolutionItems) = preProject
