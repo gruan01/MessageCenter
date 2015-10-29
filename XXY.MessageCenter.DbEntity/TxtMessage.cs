@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace XXY.MessageCenter.DbEntity {
     /// <summary>
     /// 文本消息
     /// </summary>
+    [Serializable, DataContract]
+    [JsonObject(MemberSerialization.OptOut)]
     public class TxtMessage : BaseMessage {
 
         public TxtMessage()
@@ -18,7 +21,6 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
-        [DataMember]
         [Required, StringLength(100)]
         public string Subject {
             get;
@@ -30,7 +32,6 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
-        [DataMember]
         [Required, StringLength(20)]
         public string Sender {
             get;
@@ -42,7 +43,6 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
-        [DataMember]
         public decimal ReceiverID {
             get;
             set;

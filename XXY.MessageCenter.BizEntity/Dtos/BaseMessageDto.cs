@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XXY.MessageCenter.DbEntity.Enums;
 
 namespace XXY.MessageCenter.BizEntity.Dtos {
-    public class EmailDto : BaseMessageDto {
+    public abstract class BaseMessageDto {
 
-        public string Cc {
+        public string Ctx {
             get;
             set;
         }
 
-        public string Bcc {
+        public string Receiver {
             get;
             set;
         }
 
-        public string Subject {
+        public Priorities PRI {
             get;
             set;
         }
-
-
 
     }
 }

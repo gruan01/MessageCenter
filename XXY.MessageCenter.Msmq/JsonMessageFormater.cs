@@ -16,6 +16,10 @@ namespace XXY.MessageCenter.Msmq {
 
         private Type type = null;
 
+        private JsonSerializerSettings setting = new JsonSerializerSettings() {
+            ContractResolver = new AllPropertiesResolver()
+        };
+
         public JsonMessageFormater(Type t) {
             this.type = t;
         }
@@ -38,7 +42,7 @@ namespace XXY.MessageCenter.Msmq {
                 mStream = new System.IO.MemoryStream(4096);
             mStream.Position = 0;
             mStream.SetLength(4095);
-            string value = JsonConvert.SerializeObject(obj);
+            string value = JsonConvert.SerializeObject(obj, setting);
             int count = Encoding.UTF8.GetBytes(value, 0, value.Length, mStream.GetBuffer(), 0);
             mStream.SetLength(count);
             message.BodyStream = mStream;

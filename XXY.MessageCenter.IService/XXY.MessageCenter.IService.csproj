@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XXY.MessageCenter.BizEntity\XXY.MessageCenter.BizEntity.csproj">
+      <Project>{0210de26-a9e4-4e34-adb3-5cf6a04f2ea6}</Project>
+      <Name>XXY.MessageCenter.BizEntity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XXY.MessageCenter.DbEntity\XXY.MessageCenter.DbEntity.csproj">
       <Project>{891d1f0f-ee9f-4cc4-a2dd-ae7ee8a1108d}</Project>
       <Name>XXY.MessageCenter.DbEntity</Name>

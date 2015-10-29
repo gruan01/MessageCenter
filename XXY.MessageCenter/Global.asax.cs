@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using XXY.Common;
 using XXY.Common.MVC;
+using XXY.MessageCenter.BizEntity.Dtos.Profiles;
 using XXY.MessageCenter.Metadatas;
 
 namespace XXY.MessageCenter {
@@ -27,6 +29,8 @@ namespace XXY.MessageCenter {
 
             ModelBinders.Binders.DefaultBinder = new SmartModelBinder();
             AnnorationHelper.AutoMap();
+
+            Mapper.Initialize(x => x.AddProfile<MessageProfile>());
         }
     }
 }

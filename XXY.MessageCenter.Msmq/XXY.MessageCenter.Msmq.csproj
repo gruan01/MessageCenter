@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllPropertiesResolver.cs" />
     <Compile Include="JsonMessageFormater.cs" />
     <Compile Include="QueueHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

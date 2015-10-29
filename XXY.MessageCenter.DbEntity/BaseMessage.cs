@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,9 +11,9 @@ using XXY.MessageCenter.DbEntity.Enums;
 namespace XXY.MessageCenter.DbEntity {
 
     [Serializable, DataContract]
+    [JsonObject(MemberSerialization.OptOut)]
     public abstract class BaseMessage : BaseEntity {
 
-        [DataMember]
         [NotMapped]
         public MsgTypes MsgType {
             get;
@@ -32,20 +33,17 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
-        [DataMember]
         public Priorities PRI {
             get;
             set;
         }
 
-        [DataMember]
         public string Ctx {
             get;
             set;
         }
 
 
-        [DataMember]
         public string Receiver {
             get;
             set;

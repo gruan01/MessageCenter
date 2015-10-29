@@ -15,5 +15,6 @@ namespace XXY.MessageCenter {
             container.LoadConfiguration();
             UnityConfig.RegisterTypes(container);
         }
+       
     }
 }

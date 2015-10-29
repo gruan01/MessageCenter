@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201510280855510_MessageNotNeedLang.Designer.cs">
       <DependentUpon>201510280855510_MessageNotNeedLang.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510290338053_CreateUserNameRequired.cs" />
+    <Compile Include="Migrations\201510290338053_CreateUserNameRequired.Designer.cs">
+      <DependentUpon>201510290338053_CreateUserNameRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510280855510_MessageNotNeedLang.resx">
       <DependentUpon>201510280855510_MessageNotNeedLang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510290338053_CreateUserNameRequired.resx">
+      <DependentUpon>201510290338053_CreateUserNameRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

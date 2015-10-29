@@ -50,6 +50,7 @@ namespace XXY.MessageCenter.Biz {
 
         public async override Task<bool> Handle() {
             var holder = new QueueHolder<T>(this.Config.Value.MessageMSMQPath);
+            this.SetCreateInfo(this.Msg);
             if (await this.Save())
                 return holder.Put((T)this.Msg);
             else

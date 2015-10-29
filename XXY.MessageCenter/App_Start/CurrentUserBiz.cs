@@ -30,10 +30,15 @@ namespace XXY.MessageCenter {
         /// </summary>
         /// <returns></returns>
         public User GetUser() {
-            var user = SessionHelper.Get<User>(SessionKeys.User.ToString());
-            if (user == null)
-                user = this.DefaultUser;
-            return user;
+            //WCF 调用的时候,没有 HttpContext.Current, HttpContextHelper 设计为单元测试,有 Mock 的环境.
+            //WCF 中不会有 Mock 模拟
+            if (HttpContextHelper.Current != null) {
+                var user = SessionHelper.Get<User>(SessionKeys.User.ToString());
+                if (user == null)
+                    user = this.DefaultUser;
+                return user;
+            } else
+                return this.DefaultUser;
         }
 
         public bool IsLogined {

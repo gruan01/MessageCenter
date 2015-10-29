@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace XXY.MessageCenter.DbEntity {
 
     [Serializable, DataContract]
+    [JsonObject(MemberSerialization.OptOut)]
     public abstract class BaseEntity {
 
         [Key, Column("ID", Order = 0)]
@@ -26,7 +28,7 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
-        [StringLength(20)]
+        [StringLength(20), Required]
         public string CreateByUserName {
             get;
             set;
