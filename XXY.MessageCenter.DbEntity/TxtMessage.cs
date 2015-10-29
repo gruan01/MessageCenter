@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,7 @@ namespace XXY.MessageCenter.DbEntity {
     /// </summary>
     [Serializable, DataContract]
     [JsonObject(MemberSerialization.OptOut)]
+    [ProtoContract(AsReferenceDefault = true, ImplicitFields = ImplicitFields.AllFields)]
     public class TxtMessage : BaseMessage {
 
         public TxtMessage()

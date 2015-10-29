@@ -15,10 +15,10 @@ namespace XXY.MessageCenter.Service {
 
         public static readonly string QueuePath = @"FormatName:DIRECT=OS:xling\Private$\XXY.Mail";
 
-        private QueueHolder<BaseEntity> Holder = new QueueHolder<BaseEntity>(QueuePath);
+        private QueueHolder<EMailMessage> Holder = new QueueHolder<EMailMessage>(QueuePath);
 
         [ImportMany]
-        public IEnumerable<Lazy<IMessageClient, IMessageClientMetadata>> Clients {
+        public IEnumerable<Lazy<IMessageClient>> Clients {
             get;
             set;
         }
@@ -38,14 +38,12 @@ namespace XXY.MessageCenter.Service {
             if (e.Data != null) {
                 var msg = (BaseMessage)e.Data;
                 if (msg != null) {
-                    var client = this.Clients.FirstOrDefault(c => c.Metadata.MsgType == msg.MsgType);
+                    var client = this.Clients.FirstOrDefault(c => c.Value.AcceptMessageType.Equals(msg.GetType()));
                     if (client != null) {
-                        //await client.Value.Send(msg);
-                        dynamic c = client.Value;
                         try {
-                            await c.Send(msg);
+                            await client.Value.Send(msg);
                         } catch (Exception ex) {
-
+                            Console.WriteLine(ex.Message);
                         }
                     }
                 }

@@ -11,14 +11,21 @@ using XXY.MessageCenter.DbEntity.Enums;
 namespace XXY.MessageCenter.Sms {
 
     [Export(typeof(IMessageClient))]
-    [ExportMetadata("MsgType", MsgTypes.SMS)]
-    public class SMSClient : BaseMessageClient, IMessageClient<SMSMessage> {
-        public Task Send(SMSMessage msg) {
-            throw new NotImplementedException();
-        }
+    public class SMSClient : BaseMessageClient, IMessageClient {
 
         public override void Init() {
             throw new NotImplementedException();
+        }
+
+        public Task Send(BaseMessage msg) {
+            throw new NotImplementedException();
+        }
+
+
+        public Type AcceptMessageType {
+            get {
+                return typeof(SMSMessage);
+            }
         }
     }
 }

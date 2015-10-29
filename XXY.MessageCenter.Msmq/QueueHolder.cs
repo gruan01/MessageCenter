@@ -29,7 +29,8 @@ namespace XXY.MessageCenter.Msmq {
             //"无法确定具有指定格式名的队列是否存在,
             //只能保证这个队列一定存在。
             var queue = new MessageQueue(this.QueuePath);
-            queue.Formatter = new JsonMessageFormater(typeof(T));
+            //queue.Formatter = new JsonMessageFormater(typeof(T));
+            //queue.Formatter = new ProtoBufFormatter(typeof(T));
             return queue;
         }
 
@@ -39,6 +40,8 @@ namespace XXY.MessageCenter.Msmq {
             using (var mq = this.GetQueue()) {
                 trans.Begin();
                 try {
+                    mq.Formatter = new JsonMessageFormater(data.GetType());
+                    //mq.Formatter = new ProtoBufFormatter(data.GetType());
                     mq.Send(data, trans);
                     trans.Commit();
                     return true;
@@ -58,6 +61,8 @@ namespace XXY.MessageCenter.Msmq {
 
         void mq_PeekCompleted(object sender, PeekCompletedEventArgs e) {
             var queue = (MessageQueue)sender;
+            queue.Formatter = new JsonMessageFormater(typeof(T));
+            //queue.Formatter = new ProtoBufFormatter(typeof(T));
             using (var transaction = new TransactionScope()) {
                 var msg = queue.EndPeek(e.AsyncResult);
                 if (this.OnDataReceived != null)

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +13,8 @@ namespace XXY.MessageCenter.DbEntity {
 
     [Serializable, DataContract]
     [JsonObject(MemberSerialization.OptOut)]
-    public abstract class BaseMessage : BaseEntity {
+    [ProtoContract(AsReferenceDefault = true, ImplicitFields = ImplicitFields.AllFields)]
+    public /*abstract*/ class BaseMessage : BaseEntity {
 
         [NotMapped]
         public MsgTypes MsgType {

@@ -11,14 +11,23 @@ using XXY.MessageCenter.DbEntity.Enums;
 namespace XXY.MessageCenter.QQ {
 
     [Export(typeof(IMessageClient))]
-    [ExportMetadata("MsgType", MsgTypes.QQ)]
-    public class QQClient : BaseMessageClient, IMessageClient<QQMessage> {
-        public Task Send(QQMessage msg) {
-            throw new NotImplementedException();
-        }
+    public class QQClient : BaseMessageClient, IMessageClient {
+
+
 
         public override void Init() {
             throw new NotImplementedException();
+        }
+
+        public Task Send(BaseMessage msg) {
+            throw new NotImplementedException();
+        }
+
+
+        public Type AcceptMessageType {
+            get {
+                return typeof(QQMessage);
+            }
         }
     }
 }

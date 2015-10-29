@@ -14,10 +14,17 @@ using XXY.MessageCenter.DbEntity.Enums;
 namespace XXY.MessageCenter.Email {
 
     [Export(typeof(IMessageClient))]
-    [ExportMetadata("MsgType", MsgTypes.Email)]
-    public class EmailClient : BaseMessageClient, IMessageClient<EMailMessage> {
+    public class EmailClient : BaseMessageClient, IMessageClient {
 
-        public async Task Send(EMailMessage data) {
+        public Type AcceptMessageType {
+            get {
+                return typeof(EMailMessage);
+            }
+        }
+
+        public async Task Send(BaseMessage msg) {
+            var data = (EMailMessage)msg;
+
             using (var client = new System.Net.Mail.SmtpClient()) {
                 client.SendCompleted += client_SendCompleted;
                 var mail = new MailMessage();
@@ -50,5 +57,6 @@ namespace XXY.MessageCenter.Email {
         public override void Init() {
 
         }
+
     }
 }

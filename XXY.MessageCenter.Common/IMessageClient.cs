@@ -10,17 +10,16 @@ namespace XXY.MessageCenter.Common {
 
     public interface IMessageClient {
 
-        //Task Send(BaseMessage msg);
+        Task Send(BaseMessage msg);
 
-    }
-
-    public interface IMessageClient<TMsg> : IMessageClient where TMsg : BaseMessage {
-        Task Send(TMsg msg);
-    }
-
-    public interface IMessageClientMetadata {
-        MsgTypes MsgType {
+        Type AcceptMessageType {
             get;
         }
     }
+
+    //public interface IMessageClientMetadata {
+    //    MsgTypes MsgType {
+    //        get;
+    //    }
+    //}
 }
