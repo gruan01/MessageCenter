@@ -13,7 +13,7 @@ namespace XXY.MessageCenter.QQ {
     [Export(typeof(IMessageClient))]
     public class QQClient : BaseMessageClient, IMessageClient {
 
-
+        public event EventHandler<FailbackArgs> OnFailback;
 
         public override void Init() {
             throw new NotImplementedException();

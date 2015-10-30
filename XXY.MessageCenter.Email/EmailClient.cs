@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Permissions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace XXY.MessageCenter.Email {
 
     [Export(typeof(IMessageClient))]
     public class EmailClient : BaseMessageClient, IMessageClient {
+
+        public event EventHandler<FailbackArgs> OnFailback;
 
         public Type AcceptMessageType {
             get {
@@ -36,7 +39,8 @@ namespace XXY.MessageCenter.Email {
                 foreach (var r in receivers)
                     mail.To.Add(r);
 
-                await client.SendMailAsync(mail)
+
+                await client.SendMailAsync(mail, msg)
                 .ContinueWith(t => {
                     t.Exception.Handle(ex => {
                         return true;//如果不加这一句，发邮件异常的时候，会直接关闭程序。
@@ -49,14 +53,18 @@ namespace XXY.MessageCenter.Email {
             }
         }
 
-
         private void client_SendCompleted(object sender, AsyncCompletedEventArgs e) {
+            if (e.Error != null && this.OnFailback != null) {
 
+                var state = (TaskCompletionSource<object>)e.UserState;
+                var msg = (EMailMessage)state.Task.AsyncState;
+
+                this.OnFailback(this, new FailbackArgs(msg.MsgType, msg.ID, e.Error));
+            }
         }
 
         public override void Init() {
 
         }
-
     }
 }

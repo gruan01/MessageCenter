@@ -15,6 +15,8 @@ namespace XXY.MessageCenter.Common {
         Type AcceptMessageType {
             get;
         }
+
+        event EventHandler<FailbackArgs> OnFailback;
     }
 
     //public interface IMessageClientMetadata {

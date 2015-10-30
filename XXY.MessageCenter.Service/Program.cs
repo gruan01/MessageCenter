@@ -24,6 +24,7 @@ namespace XXY.MessageCenter.Service {
         };
 
         private static string QueuePath = ConfigurationManager.AppSettings.Get("MSMQPath");
+        private static string FailbackQueuePath = ConfigurationManager.AppSettings.Get("FailbackPath");
 
         static void Main(string[] args) {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -37,7 +38,7 @@ namespace XXY.MessageCenter.Service {
                 x.SetServiceName("XXY.MessageCenter");
 
                 x.Service(s => {
-                    var server = new Server(QueuePath, SupportDataTypes);
+                    var server = new Server(QueuePath, FailbackQueuePath , SupportDataTypes);
                     try {
                         var catalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
                         var container = new CompositionContainer(catalog);

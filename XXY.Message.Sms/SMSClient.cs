@@ -13,6 +13,8 @@ namespace XXY.MessageCenter.Sms {
     [Export(typeof(IMessageClient))]
     public class SMSClient : BaseMessageClient, IMessageClient {
 
+        public event EventHandler<FailbackArgs> OnFailback;
+
         public override void Init() {
             throw new NotImplementedException();
         }

@@ -5,6 +5,7 @@ using System.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using XXY.Common.Security;
 
 namespace XXY.MessageCenter.Queue {
     public class QueueHolder {
@@ -25,6 +26,7 @@ namespace XXY.MessageCenter.Queue {
         public QueueHolder(string path, IEnumerable<Type> supportDataTypes) {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentNullException("path");
+
             if (supportDataTypes == null || supportDataTypes.Count() == 0)
                 throw new ArgumentException("supportTypes");
 
@@ -32,6 +34,10 @@ namespace XXY.MessageCenter.Queue {
 
             this.QueuePath = path;
             this.SupportDataTypes = supportDataTypes;
+        }
+
+        public QueueHolder(string path, params Type[] supportTypes)
+            : this(path, supportTypes.AsEnumerable()) {
         }
 
         private MessageQueue GetQueue() {
@@ -71,10 +77,10 @@ namespace XXY.MessageCenter.Queue {
                     //mq.Formatter = new ProtoBufFormatter(data.GetType());
                     var msg = new Message(data);
                     msg.Formatter = new JsonMessageFormater(data.GetType());
-                    msg.Label = data.GetType().FullName;
+                    msg.Label = data.GetType().FullName.To16bitMD5();////名称太长会报错
                     msg.Priority = this.ConvertPriority(pri);
                     msg.Recoverable = true;
-                    
+
                     mq.Send(msg, trans);
                     trans.Commit();
                     return true;
@@ -95,7 +101,7 @@ namespace XXY.MessageCenter.Queue {
         void mq_PeekCompleted(object sender, PeekCompletedEventArgs e) {
             var queue = (MessageQueue)sender;
 
-            var type = this.SupportDataTypes.FirstOrDefault(t => t.FullName.Equals(e.Message.Label));
+            var type = this.SupportDataTypes.FirstOrDefault(t => t.FullName.To16bitMD5().Equals(e.Message.Label));
             if (type != null) {
                 queue.Formatter = new JsonMessageFormater(type);
                 //queue.Formatter = new ProtoBufFormatter(typeof(T));

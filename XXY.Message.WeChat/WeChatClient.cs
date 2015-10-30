@@ -20,6 +20,8 @@ namespace XXY.MessageCenter.WeChat {
     //[ExportMetadata("MsgType", MsgTypes.WeChat)]
     public class WeChatClient : BaseMessageClient, IMessageClient {
 
+        public event EventHandler<FailbackArgs> OnFailback;
+
         static WeChatClient() {
             var cfg = ConfigurationHelper.GetSection<WeChatConfig>();
             var configs = new List<ApiConfig>() {
