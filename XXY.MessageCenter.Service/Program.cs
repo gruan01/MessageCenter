@@ -9,6 +9,7 @@ using System.ComponentModel.Composition;
 using XXY.MessageCenter.Common;
 using XXY.MessageCenter.DbEntity;
 using System.Configuration;
+using System.Reflection;
 
 
 namespace XXY.MessageCenter.Service {
@@ -37,9 +38,15 @@ namespace XXY.MessageCenter.Service {
 
                 x.Service(s => {
                     var server = new Server(QueuePath, SupportDataTypes);
-                    var catalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
-                    var container = new CompositionContainer(catalog);
-                    container.ComposeParts(server);
+                    try {
+                        var catalog = new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory);
+                        var container = new CompositionContainer(catalog);
+                        container.ComposeParts(server);
+                    } catch (ReflectionTypeLoadException ex) {
+                        Console.WriteLine(ex.Message);
+                    } catch (Exception ex1) {
+                    
+                    }
                     return server;
                 });
             });
