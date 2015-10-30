@@ -41,6 +41,10 @@ namespace XXY.MessageCenter.Biz {
         public virtual Task<bool> Handle() {
             return Task.FromResult(true);
         }
+
+        public virtual void Update(Entities db, ProcessedMsg data) {
+
+        }
     }
 
 
@@ -62,6 +66,14 @@ namespace XXY.MessageCenter.Biz {
                     return true;
                 }
                 return false;
+            }
+        }
+
+        public override void Update(Entities db, ProcessedMsg data) {
+            var entry = db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == data.MsgID);
+            if (entry != null) {
+                entry.Status = data.IsSuccessed ? MsgStatus.Processed : MsgStatus.Failed;
+                this.SetModifyInfo(entry);
             }
         }
 
@@ -100,8 +112,15 @@ namespace XXY.MessageCenter.Biz {
     public static class MessageHandlerFactory {
 
         public static BaseMessageHandler GetHandler(BaseMessage msg) {
+            var handler = GetHandler(msg.MsgType);
+            if (handler != null)
+                handler.Msg = msg;
+            return handler;
+        }
+
+        public static BaseMessageHandler GetHandler(MsgTypes msgType) {
             BaseMessageHandler handler = null;
-            switch (msg.MsgType) {
+            switch (msgType) {
                 case MsgTypes.Email:
                     handler = new EmailMessageHandler();
                     break;
@@ -118,10 +137,6 @@ namespace XXY.MessageCenter.Biz {
                     handler = new WeChatMessageHandler();
                     break;
             }
-
-
-            if (handler != null)
-                handler.Msg = msg;
             return handler;
         }
     }

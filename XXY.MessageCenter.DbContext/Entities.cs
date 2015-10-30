@@ -61,5 +61,10 @@ namespace XXY.MessageCenter.DbContext {
             get;
             set;
         }
+
+        public DbSet<FailedMessage> FailedMessages {
+            get;
+            set;
+        }
     }
 }

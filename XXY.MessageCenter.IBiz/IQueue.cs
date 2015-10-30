@@ -10,5 +10,6 @@ namespace XXY.MessageCenter.IBiz {
 
         Task<bool> Put<T>(T msg) where T : BaseMessage;
 
+        Task Update(IEnumerable<ProcessedMsg> msgs);
     }
 }

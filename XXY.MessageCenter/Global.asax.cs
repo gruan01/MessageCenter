@@ -10,6 +10,7 @@ using XXY.Common;
 using XXY.Common.MVC;
 using XXY.MessageCenter.BizEntity.Dtos.Profiles;
 using XXY.MessageCenter.Metadatas;
+using XXY.MessageCenter.ProcessedScanner;
 
 namespace XXY.MessageCenter {
     public class MvcApplication : System.Web.HttpApplication {
@@ -31,6 +32,12 @@ namespace XXY.MessageCenter {
             AnnorationHelper.AutoMap();
 
             Mapper.Initialize(x => x.AddProfile<MessageProfile>());
+
+            Scanner.Instance.Value.Start();
+        }
+
+        protected void Application_End() {
+            Scanner.Instance.Value.Stop();
         }
     }
 }

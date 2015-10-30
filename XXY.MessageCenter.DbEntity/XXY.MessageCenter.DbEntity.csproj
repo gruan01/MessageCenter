@@ -62,9 +62,12 @@
     <Compile Include="BaseEntry.cs" />
     <Compile Include="BaseMessage.cs" />
     <Compile Include="Enums\Langs.cs" />
+    <Compile Include="Enums\MsgStatus.cs" />
     <Compile Include="Enums\MsgTypes.cs" />
     <Compile Include="Enums\Priorities.cs" />
     <Compile Include="EMailMessage.cs" />
+    <Compile Include="FailedMessage.cs" />
+    <Compile Include="ProcessedMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QQMessage.cs" />
     <Compile Include="SMSMessage.cs" />

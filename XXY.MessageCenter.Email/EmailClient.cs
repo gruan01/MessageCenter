@@ -17,7 +17,7 @@ namespace XXY.MessageCenter.Email {
     [Export(typeof(IMessageClient))]
     public class EmailClient : BaseMessageClient, IMessageClient {
 
-        public event EventHandler<FailbackArgs> OnFailback;
+        public event EventHandler<ProcessedArgs> OnProcessed;
 
         public Type AcceptMessageType {
             get {
@@ -54,12 +54,11 @@ namespace XXY.MessageCenter.Email {
         }
 
         private void client_SendCompleted(object sender, AsyncCompletedEventArgs e) {
-            if (e.Error != null && this.OnFailback != null) {
+            var state = (TaskCompletionSource<object>)e.UserState;
+            var msg = (EMailMessage)state.Task.AsyncState;
 
-                var state = (TaskCompletionSource<object>)e.UserState;
-                var msg = (EMailMessage)state.Task.AsyncState;
-
-                this.OnFailback(this, new FailbackArgs(msg.MsgType, msg.ID, e.Error));
+            if (this.OnProcessed != null) {
+                this.OnProcessed(this, new ProcessedArgs(msg.MsgType, msg.ID, e.Error));
             }
         }
 

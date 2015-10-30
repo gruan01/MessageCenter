@@ -53,5 +53,9 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        public MsgStatus Status {
+            get;
+            set;
+        }
     }
 }

@@ -12,14 +12,14 @@ namespace XXY.MessageCenter {
     public class Config : IConfig {
         public string MessageMSMQPath {
             get {
-                return ConfigurationManager.AppSettings.Get("MessageMSMQPath");
+                return ConfigurationManager.AppSettings.Get("MSMQPath");
             }
         }
 
 
-        public string FailedMessageMSMQPath {
+        public string ProcessedMessageMSMQPath {
             get {
-                return ConfigurationManager.AppSettings.Get("FailedMessageMSMQPath");
+                return ConfigurationManager.AppSettings.Get("ProcessedMSMQPath");
             }
         }
     }

@@ -16,7 +16,7 @@ namespace XXY.MessageCenter.Common {
             get;
         }
 
-        event EventHandler<FailbackArgs> OnFailback;
+        event EventHandler<ProcessedArgs> OnProcessed;
     }
 
     //public interface IMessageClientMetadata {

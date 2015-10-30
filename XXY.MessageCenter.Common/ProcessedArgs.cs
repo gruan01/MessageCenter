@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using XXY.MessageCenter.DbEntity.Enums;
 
 namespace XXY.MessageCenter.Common {
-    public class FailbackArgs : EventArgs {
+    public class ProcessedArgs : EventArgs {
 
         public MsgTypes MsgType {
             get;
@@ -23,7 +23,7 @@ namespace XXY.MessageCenter.Common {
             private set;
         }
 
-        public FailbackArgs(MsgTypes msgType, int id, Exception ex) {
+        public ProcessedArgs(MsgTypes msgType, int id, Exception ex = null) {
             this.MsgType = msgType;
             this.ID = id;
             this.Exception = ex;

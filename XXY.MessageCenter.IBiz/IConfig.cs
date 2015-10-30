@@ -11,7 +11,7 @@ namespace XXY.MessageCenter.IBiz {
             get;
         }
 
-        string FailedMessageMSMQPath {
+        string ProcessedMessageMSMQPath {
             get;
         }
     }

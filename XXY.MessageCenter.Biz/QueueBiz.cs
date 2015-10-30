@@ -13,6 +13,7 @@ using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.IBiz;
 using XXY.MessageCenter.Queue;
+using XXY.Common.Extends;
 
 namespace XXY.MessageCenter.Biz {
 
@@ -25,6 +26,32 @@ namespace XXY.MessageCenter.Biz {
                 return await handler.Handle();
             } else {
                 throw new NotSupportedException(string.Format("目前不支持类型为 {0} 的消息", msg.MsgType));
+            }
+        }
+
+
+        public async Task Update(IEnumerable<ProcessedMsg> msgs) {
+            using (var db = new Entities()) {
+                foreach (var msg in msgs) {
+                    if (msg.IsSuccessed) {
+                        var handler = MessageHandlerFactory.GetHandler(msg.MsgType);
+                        if (handler != null) {
+                            handler.Update(db, msg);
+                        }
+                    } else {
+                        var fm = new FailedMessage() {
+                            MsgID = msg.MsgID,
+                            MsgType = msg.MsgType,
+                            Log = msg.Error.Substring(0, 1000)
+                        };
+                        this.SetCreateInfo(fm);
+                        db.FailedMessages.Add(fm);
+                    }
+                }
+
+                this.Errors = db.GetErrors();
+                if (!this.HasError)
+                    await db.SaveChangesAsync();
             }
         }
     }

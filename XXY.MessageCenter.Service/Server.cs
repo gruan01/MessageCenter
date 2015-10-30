@@ -16,7 +16,7 @@ namespace XXY.MessageCenter.Service {
     public class Server : ServiceControl {
 
         private QueueHolder Holder = null;
-        private QueueHolder FailbackHolder = null;
+        private QueueHolder ProcessedHolder = null;
 
 
         [ImportMany]
@@ -25,14 +25,14 @@ namespace XXY.MessageCenter.Service {
             set;
         }
 
-        public Server(string queuePath, string failbackQueuePath, IEnumerable<Type> supportDataTypes) {
+        public Server(string queuePath, string processedQueuePath, IEnumerable<Type> supportDataTypes) {
             this.Holder = new QueueHolder(queuePath, supportDataTypes);
-            this.FailbackHolder = new QueueHolder(failbackQueuePath, typeof(Tuple<MsgTypes, int, string>));
+            this.ProcessedHolder = new QueueHolder(processedQueuePath, typeof(ProcessedMsg));
         }
 
         public bool Start(HostControl hostControl) {
             foreach (var c in this.Clients) {
-                c.Value.OnFailback += OnFailback;
+                c.Value.OnProcessed += Processed;
             }
             this.Holder.OnDataReceived += Holder_OnDataReceived;
             this.Holder.Listen();
@@ -40,9 +40,14 @@ namespace XXY.MessageCenter.Service {
         }
 
 
-        void OnFailback(object sender, FailbackArgs e) {
+        void Processed(object sender, ProcessedArgs e) {
             try {
-                this.FailbackHolder.Put(new Tuple<MsgTypes, int, string>(e.MsgType, e.ID, e.Exception.Message));
+                this.ProcessedHolder.Put(new ProcessedMsg() {
+                    Error = e.Exception.Message,
+                    IsSuccessed = e.Exception == null,
+                    MsgID = e.ID,
+                    MsgType = e.MsgType
+                });
             } catch (Exception ex) {
                 Console.WriteLine(ex.Message);
             }
@@ -50,7 +55,7 @@ namespace XXY.MessageCenter.Service {
 
         public bool Stop(HostControl hostControl) {
             foreach (var c in this.Clients) {
-                c.Value.OnFailback -= OnFailback;
+                c.Value.OnProcessed -= Processed;
             }
             this.Holder.OnDataReceived -= Holder_OnDataReceived;
             return true;

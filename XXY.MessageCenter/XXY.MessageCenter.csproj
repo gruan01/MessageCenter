@@ -492,6 +492,10 @@
       <Project>{891d1f0f-ee9f-4cc4-a2dd-ae7ee8a1108d}</Project>
       <Name>XXY.MessageCenter.DbEntity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XXY.MessageCenter.FailbackScanner\XXY.MessageCenter.ProcessedScanner.csproj">
+      <Project>{42ba2e81-9fca-4205-bc33-4f3f85917775}</Project>
+      <Name>XXY.MessageCenter.ProcessedScanner</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XXY.MessageCenter.IBiz\XXY.MessageCenter.IBiz.csproj">
       <Project>{290ef4f3-652c-4c3c-b071-38302ffff292}</Project>
       <Name>XXY.MessageCenter.IBiz</Name>

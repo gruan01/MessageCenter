@@ -64,6 +64,14 @@
     <Compile Include="Migrations\201510290914359_Init.Designer.cs">
       <DependentUpon>201510290914359_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510300811291_FailedMessage.cs" />
+    <Compile Include="Migrations\201510300811291_FailedMessage.Designer.cs">
+      <DependentUpon>201510300811291_FailedMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510300856341_MessageStatus.cs" />
+    <Compile Include="Migrations\201510300856341_MessageStatus.Designer.cs">
+      <DependentUpon>201510300856341_MessageStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +91,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201510290914359_Init.resx">
       <DependentUpon>201510290914359_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510300811291_FailedMessage.resx">
+      <DependentUpon>201510300811291_FailedMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510300856341_MessageStatus.resx">
+      <DependentUpon>201510300856341_MessageStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
