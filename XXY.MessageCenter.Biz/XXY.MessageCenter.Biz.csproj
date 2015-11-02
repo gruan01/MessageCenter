@@ -107,6 +107,10 @@
       <Project>{d241c2c3-7d15-43fb-ac94-1ba904a2eb03}</Project>
       <Name>XXY.MessageCenter.Queue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XXY.MessageCenter.TxtMsgHub\XXY.MessageCenter.TxtMsgHub.csproj">
+      <Project>{6705de60-976e-4c03-a3a2-96c1b20ddccb}</Project>
+      <Name>XXY.MessageCenter.TxtMsgHub</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

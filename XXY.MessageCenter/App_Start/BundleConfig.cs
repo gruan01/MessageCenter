@@ -41,6 +41,7 @@ namespace XXY.MessageCenter {
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/jquery-ui-{version}.js",
                 "~/Scripts/jquery.validate*",
+                "~/Scripts/jquery.signalR-{version}.js",
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/jquery.colorbox.js",
                 "~/Scripts/Common.js"

@@ -93,7 +93,8 @@
     @RenderSection("prescripts", required: false)
     @Scripts.Render(BundleConfig.Common)
     @RenderSection("scripts", required: false)
-
+    <script src="/Msg/hubs"></script>
+    <script src="~/Scripts/Msg.js"></script>
     @if (!string.IsNullOrWhiteSpace(message)) {
         <script>
             $(function(){

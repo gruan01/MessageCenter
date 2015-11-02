@@ -13,6 +13,7 @@ using XXY.MessageCenter.IBiz;
 using XXY.MessageCenter.Queue;
 using Microsoft.Practices.ServiceLocation;
 using XXY.MessageCenter.BizEntity.Conditions;
+using XXY.MessageCenter.TxtMsgHub;
 
 namespace XXY.MessageCenter.Biz {
 
@@ -211,7 +212,12 @@ namespace XXY.MessageCenter.Biz {
 
     public class TxtMessageHandler : BaseMessageHandler<TxtMessage> {
         public override async Task<bool> Handle() {
-            return await this.InsertToDb();
+            if (await this.InsertToDb()) {
+                var msg = (TxtMessage)this.Msg;
+                TxtMsgSender.Send(msg.ReceiverID.ToString(), msg);
+                return true;
+            }
+            return false;
         }
     }
 
