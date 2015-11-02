@@ -12,6 +12,7 @@ using Microsoft.Practices.Unity;
 using XXY.MessageCenter.IBiz;
 using XXY.MessageCenter.Queue;
 using Microsoft.Practices.ServiceLocation;
+using XXY.MessageCenter.BizEntity.Conditions;
 
 namespace XXY.MessageCenter.Biz {
 
@@ -38,13 +39,15 @@ namespace XXY.MessageCenter.Biz {
             this.Config = ServiceLocator.Current.GetInstance<Lazy<IConfig>>();
         }
 
-        public virtual Task<bool> Handle() {
-            return Task.FromResult(true);
-        }
+        public abstract Task<bool> Handle();
 
-        public virtual void Update(Entities db, ProcessedMsg data) {
+        public abstract void Update(Entities db, ProcessedMsg data);
 
-        }
+        public abstract IEnumerable<BaseMessage> Search(MessageSearchCondition cond);
+
+        public abstract BaseMessage Get(int id);
+
+        public abstract Task<bool> Delete(int id);
     }
 
 
@@ -100,6 +103,60 @@ namespace XXY.MessageCenter.Biz {
                 default:
                     return Queue.Priorities.Normal;
             }
+        }
+
+        public override IEnumerable<BaseMessage> Search(MessageSearchCondition cond) {
+            using (var db = new Entities()) {
+                var datas = cond.Filter(db.Set<T>().Where(t => !t.IsDeleted))
+                    .OrderByDescending(t => t.ID)
+                    .DoPage(cond.Pager)
+                    .ToList();
+
+                //MsgType 并没有映射到表中, 只是构造函数中的一个参数而已.
+                //所以上一段是要先 ToList
+
+                var query2 = from m in datas
+                             join e in db.FailedMessages on
+                                 new {
+                                     m.ID,
+                                     m.MsgType
+                                 }
+                                 equals
+                                 new {
+                                     ID = e.MsgID,
+                                     e.MsgType
+                                 } into es
+                             select new {
+                                 m,
+                                 es
+                             };
+
+                foreach (var d in query2) {
+                    var data = d.m;
+                    d.m.ErrorInfo = string.Join(";", d.es.Select(E => E.Log));
+                    yield return data;
+                }
+            }
+        }
+
+        public override BaseMessage Get(int id) {
+            using (var db = new Entities()) {
+                return db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == id);
+            }
+        }
+
+        public override async Task<bool> Delete(int id) {
+            using (var db = new Entities()) {
+                var ex = db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == id);
+                if (ex != null) {
+                    ex.IsDeleted = true;
+                    this.SetModifyInfo(ex);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 

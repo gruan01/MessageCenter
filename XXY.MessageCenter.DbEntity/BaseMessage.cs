@@ -57,5 +57,14 @@ namespace XXY.MessageCenter.DbEntity {
             get;
             set;
         }
+
+        /// <summary>
+        /// 仅用于关联查询,临时数据赋值
+        /// </summary>
+        [NotMapped]
+        public string ErrorInfo {
+            get;
+            set;
+        }
     }
 }

@@ -70,6 +70,7 @@ namespace XXY.MessageCenter.Service {
                         try {
                             await client.Value.Send(msg);
                         } catch (Exception ex) {
+                            this.Processed(this, new ProcessedArgs(msg.MsgType, msg.ID, ex));
                             Console.WriteLine(ex.Message);
                         }
                     }

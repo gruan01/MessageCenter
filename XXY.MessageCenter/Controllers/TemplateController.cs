@@ -25,7 +25,11 @@ namespace XXY.MessageCenter.Controllers {
         }
 
         public ActionResult Index() {
-            return View();
+            var cond = this.GetCondition<TemplateSearchCondition>();
+            if (cond != null)
+                return Index(cond);
+            else
+                return View();
         }
 
 

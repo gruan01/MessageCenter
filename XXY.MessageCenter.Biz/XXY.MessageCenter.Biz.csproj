@@ -81,7 +81,7 @@
   <ItemGroup>
     <Compile Include="BaseBiz.cs" />
     <Compile Include="BaseMessageHandler.cs" />
-    <Compile Include="EmailMessageHandler.cs" />
+    <Compile Include="MessageViewerBiz.cs" />
     <Compile Include="QueueBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateBiz.cs" />

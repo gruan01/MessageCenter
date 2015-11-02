@@ -26,8 +26,12 @@ namespace XXY.MessageCenter.DbEntity {
 
         [Required, StringLength(100)]
         new public string Receiver {
-            get;
-            set;
+            get {
+                return base.Receiver;
+            }
+            set {
+                base.Receiver = value;
+            }
         }
 
     }
