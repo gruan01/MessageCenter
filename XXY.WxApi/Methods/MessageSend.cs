@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using XXY.WxApi.Attributes;
+using XXY.WxApi.Entities;
 using XXY.WxApi.Entities.Messages;
 
 namespace XXY.WxApi.Methods {
     /// <summary>
     /// 主动发送消息
     /// </summary>
-    public class MessageSend : MethodBase<object> {
+    public class MessageSend : MethodBase<BaseResult> {
         public Message Message {
             get;
             set;

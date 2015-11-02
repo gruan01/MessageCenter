@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using XXY.Common.Net;
 using XXY.WxApi.Attributes;
 
@@ -55,7 +56,7 @@ namespace XXY.WxApi {
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        internal virtual string GetResult(ApiClient client) {
+        internal virtual Task<string> GetResult(ApiClient client) {
             var url = client.GetApiUrl(this.MethodName);
             var dic = this.GetParams();
             var rh = new RequestHelper(client.Cookies);
@@ -67,7 +68,7 @@ namespace XXY.WxApi {
                 var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this.PostData));
                 ctx = rh.Post(url, dic, null, bytes, contentType: "application/json");
             }
-            return ctx;
+            return Task.FromResult(ctx);
         }
 
         /// <summary>
@@ -76,8 +77,8 @@ namespace XXY.WxApi {
         /// <param name="client"></param>
         /// <returns></returns>
         [NeedAuth]
-        public virtual TResult Execute(ApiClient client) {
-            this.ResultString = this.GetResult(client);
+        public async virtual Task<TResult> Execute(ApiClient client) {
+            this.ResultString = await this.GetResult(client);
             return JsonConvert.DeserializeObject<TResult>(this.ResultString);
         }
     }

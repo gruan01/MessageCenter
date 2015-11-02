@@ -7,6 +7,7 @@ using XXY.Common.Extends;
 using XXY.WxApi.Entities;
 using XXY.WxApi.Methods;
 using Microsoft.Practices.Unity;
+using System.Threading.Tasks;
 
 namespace XXY.WxApi {
     public class ApiClient {
@@ -112,22 +113,22 @@ namespace XXY.WxApi {
         /// <typeparam name="T"></typeparam>
         /// <param name="method"></param>
         /// <returns></returns>
-        public T Execute<T>(MethodBase<T> method) {
+        public async Task<T> Execute<T>(MethodBase<T> method) {
             //将方法在策略中包装
             var m = (MethodBase<T>)PolicyInjection.Wrap(method.GetType(), method);
-            return m.Execute(this);
+            return await m.Execute(this);
         }
 
 
         /// <summary>
         /// 对ApiClient 进行认证
         /// </summary>
-        internal void DoAuth() {
+        internal async void DoAuth() {
             var method = new GetToken() {
                 AppID = this.Config.AppID,
                 Secret = this.Config.Secret
             };
-            this.Token = method.Execute(this);
+            this.Token = await method.Execute(this);
         }
 
 

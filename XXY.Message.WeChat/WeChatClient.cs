@@ -35,8 +35,7 @@ namespace XXY.MessageCenter.WeChat {
             throw new NotImplementedException();
         }
 
-        public Task Send(BaseMessage msg) {
-            var tcs = new TaskCompletionSource<object>();
+        public async Task Send(BaseMessage msg) {
             var data = (WeChatMessage)msg;
             var api = ApiClient.GetInstance("xxy");
 
@@ -48,9 +47,11 @@ namespace XXY.MessageCenter.WeChat {
                     Content = data.Ctx
                 }
             };
-            var result = api.Execute(method);
-            tcs.SetResult(result);
-            return tcs.Task;
+            var result = await api.Execute(method);
+            if (this.OnProcessed != null) {
+                var ex = result.HasError ? new Exception(result.ErrorInfo) : null;
+                this.OnProcessed(this, new ProcessedArgs(DbEntity.Enums.MsgTypes.WeChat, data.ID, ex));
+            }
         }
 
 
