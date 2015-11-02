@@ -52,14 +52,22 @@ namespace XXY.MessageCenter.DbEntity {
 
         [Required, StringLength(20)]
         new public string Receiver {
-            get;
-            set;
+            get {
+                return base.Receiver;
+            }
+            set {
+                base.Receiver = value;
+            }
         }
 
         [Required, StringLength(1000)]
         new public string Ctx {
-            get;
-            set;
+            get {
+                return base.Ctx;
+            }
+            set {
+                base.Ctx = value;
+            }
         }
     }
 }

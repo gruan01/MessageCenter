@@ -60,7 +60,9 @@ namespace XXY.MessageCenter.Biz {
 
     public abstract class BaseMessageHandler<T> : BaseMessageHandler where T : BaseMessage {
 
-        protected async virtual Task<bool> Save() {
+        protected async virtual Task<bool> InsertToDb() {
+            this.Msg.Status = MsgStatus.Processing;
+            this.SetCreateInfo(this.Msg);
             using (var db = new Entities()) {
                 db.Set<T>().Add((T)this.Msg);
                 this.Errors = db.GetErrors();
@@ -82,9 +84,7 @@ namespace XXY.MessageCenter.Biz {
 
         public async override Task<bool> Handle() {
             var holder = new QueueHolder(this.Config.Value.MessageMSMQPath, SupportDataTypes);
-            this.Msg.Status = MsgStatus.Processing;
-            this.SetCreateInfo(this.Msg);
-            if (await this.Save())
+            if (await this.InsertToDb())
                 return holder.Put((T)this.Msg, this.ConvertPriority(this.Msg.PRI));
             else
                 return false;
@@ -211,7 +211,7 @@ namespace XXY.MessageCenter.Biz {
 
     public class TxtMessageHandler : BaseMessageHandler<TxtMessage> {
         public override async Task<bool> Handle() {
-            return await this.Save();
+            return await this.InsertToDb();
         }
     }
 
