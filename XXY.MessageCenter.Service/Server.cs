@@ -43,7 +43,7 @@ namespace XXY.MessageCenter.Service {
         void Processed(object sender, ProcessedArgs e) {
             try {
                 this.ProcessedHolder.Put(new ProcessedMsg() {
-                    Error = e.Exception.Message,
+                    Error = e.Exception != null ? e.Exception.Message : null,
                     IsSuccessed = e.Exception == null,
                     MsgID = e.ID,
                     MsgType = e.MsgType

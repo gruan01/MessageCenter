@@ -12,6 +12,10 @@ namespace XXY.MessageCenter.Tests.Controllers {
     public class HomeControllerTest {
         [TestMethod]
         public void Index() {
+
+            var str = "中华人民共和国";
+            var a = new String(str.Skip(1).Take(10).ToArray());
+
             // Arrange
             HomeController controller = new HomeController();
 

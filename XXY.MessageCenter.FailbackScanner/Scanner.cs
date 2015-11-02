@@ -19,7 +19,7 @@ namespace XXY.MessageCenter.ProcessedScanner {
 
 
     [Synchronization(SynchronizationAttribute.REQUIRED, true)]
-    public class Scanner {
+    public class Scanner : IDisposable {
         private static QueueHolder Holder = null;
 
         /// <summary>
@@ -31,6 +31,8 @@ namespace XXY.MessageCenter.ProcessedScanner {
         /// 最大临时保存时间
         /// </summary>
         private static TimeSpan MaxStoreTime = TimeSpan.FromMinutes(2);
+
+        private System.Timers.Timer Timer = null;
 
         public static Lazy<Scanner> Instance = new Lazy<Scanner>(() => {
             return new Scanner();
@@ -47,7 +49,6 @@ namespace XXY.MessageCenter.ProcessedScanner {
         /// </summary>
         private DateTime LastSaveTime = DateTime.Now;
 
-        private IQueue QueieBiz = null;
 
         static Scanner() {
             var config = ServiceLocator.Current.GetInstance<IConfig>();
@@ -55,15 +56,29 @@ namespace XXY.MessageCenter.ProcessedScanner {
         }
 
         private Scanner() {
+            this.Timer = new System.Timers.Timer(MaxStoreTime.TotalMilliseconds) {
+                AutoReset = true
+            };
+            this.Timer.Elapsed += Timer_Elapsed;
+        }
+
+        async void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            await this.Save();
         }
 
         public void Start() {
             Holder.OnDataReceived += holder_OnDataReceived;
             Holder.Listen();
+            this.Timer.Enabled = true;
+        }
+
+        private async void Detect(object state) {
+            await this.DetectSave();
         }
 
         public async void Stop() {
             Holder.OnDataReceived -= holder_OnDataReceived;
+            this.Timer.Enabled = false;
             await this.Save();
         }
 
@@ -82,12 +97,28 @@ namespace XXY.MessageCenter.ProcessedScanner {
 
         //[MethodImplAttribute(MethodImplOptions.Synchronized)]
         private async Task Save() {
-
-            var biz = ServiceLocator.Current.GetInstance<IQueue>();
-            await biz.Update(this.StoredList);
-
-            this.StoredList.Clear();
+            if (this.StoredList != null && this.StoredList.Count > 0) {
+                var biz = ServiceLocator.Current.GetInstance<IQueue>();
+                await biz.Update(this.StoredList);
+                this.StoredList.Clear();
+            }
             this.LastSaveTime = DateTime.Now;
+        }
+
+        ~Scanner() {
+            Dispose(false);
+        }
+
+        public void Dispose() {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposing) {
+                this.Stop();
+                this.Timer.Dispose();
+            }
         }
     }
 }

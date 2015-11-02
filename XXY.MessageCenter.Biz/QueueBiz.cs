@@ -33,19 +33,19 @@ namespace XXY.MessageCenter.Biz {
         public async Task Update(IEnumerable<ProcessedMsg> msgs) {
             using (var db = new Entities()) {
                 foreach (var msg in msgs) {
-                    if (msg.IsSuccessed) {
-                        var handler = MessageHandlerFactory.GetHandler(msg.MsgType);
-                        if (handler != null) {
-                            handler.Update(db, msg);
-                        }
-                    } else {
+                    if (!msg.IsSuccessed) {
                         var fm = new FailedMessage() {
                             MsgID = msg.MsgID,
                             MsgType = msg.MsgType,
-                            Log = msg.Error.Substring(0, 1000)
+                            Log = msg.Error.SafeSubString(1000)
                         };
                         this.SetCreateInfo(fm);
                         db.FailedMessages.Add(fm);
+                    }
+
+                    var handler = MessageHandlerFactory.GetHandler(msg.MsgType);
+                    if (handler != null) {
+                        handler.Update(db, msg);
                     }
                 }
 

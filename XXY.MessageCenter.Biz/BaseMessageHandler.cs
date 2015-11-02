@@ -79,6 +79,7 @@ namespace XXY.MessageCenter.Biz {
 
         public async override Task<bool> Handle() {
             var holder = new QueueHolder(this.Config.Value.MessageMSMQPath, SupportDataTypes);
+            this.Msg.Status = MsgStatus.Processing;
             this.SetCreateInfo(this.Msg);
             if (await this.Save())
                 return holder.Put((T)this.Msg, this.ConvertPriority(this.Msg.PRI));
