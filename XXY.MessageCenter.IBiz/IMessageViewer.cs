@@ -10,10 +10,16 @@ using XXY.MessageCenter.DbEntity.Enums;
 namespace XXY.MessageCenter.IBiz {
     public interface IMessageViewer {
 
-        IEnumerable<BaseMessage> Search(MessageSearchCondition cond);
+        Task<IEnumerable<BaseMessage>> Search(MessageSearchCondition cond);
 
-        BaseMessage Get(MsgTypes type, int id);
+        Task<BaseMessage> Get(MsgTypes type, int id);
 
         Task<bool> Delete(MsgTypes type, int id);
+
+        Task<TxtMessage> GetTxtMsg(int msgID, double receiverID);
+
+        Task<int> GetUnReadTxtMsgCount(double receiverID);
+
+        Task<bool> SetTxtMsgReaded(int msgID);
     }
 }

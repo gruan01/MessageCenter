@@ -12,12 +12,13 @@ using XXY.MessageCenter.DbEntity.Enums;
 using XXY.Common.Extends;
 using XXY.MessageCenter.BizEntity.Conditions;
 using XXY.MessageCenter.IBiz;
+using System.Data.Entity;
 
 namespace XXY.MessageCenter.Biz {
 
     [AutoInjection(typeof(ITemplate))]
     public class TemplateBiz : BaseBiz, ITemplate {
-        public Template GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang) {
+        public async Task<Template> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang) {
             code = code.ToUpper().Trim();
             appCode = appCode.ToUpper();
 
@@ -30,7 +31,7 @@ namespace XXY.MessageCenter.Biz {
                     && ((lang != null && t.Lang == lang.Value) || (lang == null && t.IsDefault))
                     );
 
-                return query.FirstOrDefault();
+                return await query.FirstOrDefaultAsync();
             }
         }
 
@@ -40,7 +41,7 @@ namespace XXY.MessageCenter.Biz {
             var lang = entry.Lang;
 
             using (var db = new Entities()) {
-                if (this.IsRepeat(db, entry.Code, entry.AppCode, entry.Lang))
+                if (await this.IsRepeat(db, entry.Code, entry.AppCode, entry.Lang))
                     throw new DataRepeatException<Template>(entry, t => t.Code, t => t.AppCode, t => t.Lang);
                 else {
                     var template = new Template() {
@@ -64,8 +65,8 @@ namespace XXY.MessageCenter.Biz {
 
         public async Task Edit(int id, Template entry) {
             using (var db = new Entities()) {
-                if (!this.IsRepeat(db, entry.Code, entry.AppCode, entry.Lang, id)) {
-                    var ex = db.Templates.FirstOrDefault(t => t.ID == id && !t.IsDeleted);
+                if (!await this.IsRepeat(db, entry.Code, entry.AppCode, entry.Lang, id)) {
+                    var ex = await db.Templates.FirstOrDefaultAsync(t => t.ID == id && !t.IsDeleted);
                     if (ex != null) {
                         entry.CopyToOnly(ex,
                             p => p.Code, p => p.AppCode, p => p.Lang,
@@ -84,9 +85,9 @@ namespace XXY.MessageCenter.Biz {
             }
         }
 
-        public Template GetBySeq(decimal id) {
+        public async Task<Template> GetBySeq(decimal id) {
             using (var db = new Entities()) {
-                return db.Templates.FirstOrDefault(t => t.ID == id);
+                return await db.Templates.FirstOrDefaultAsync(t => t.ID == id);
             }
         }
 
@@ -104,21 +105,21 @@ namespace XXY.MessageCenter.Biz {
         }
 
 
-        public IEnumerable<Template> Search(TemplateSearchCondition cond) {
+        public async Task<IEnumerable<Template>> Search(TemplateSearchCondition cond) {
             using (var db = new Entities()) {
                 var query = cond.Filter(db.Templates.Where(t => !t.IsDeleted));
-                return query
+                return await query
                     .OrderBy(m => m.Code)
-                    .DoPage(cond.Pager).ToList();
+                    .DoPage(cond.Pager).ToListAsync();
             }
         }
 
-        private bool IsRepeat(Entities db, string code, string appCode, Langs lang, int? id = null) {
+        private async Task<bool> IsRepeat(Entities db, string code, string appCode, Langs lang, int? id = null) {
             id = id ?? -1;
             code = code.ToUpper().Trim();
             appCode = appCode.ToUpper().Trim();
 
-            return db.Templates.Any(t =>
+            return await db.Templates.AnyAsync(t =>
                 !t.IsDeleted
                 && t.ID != id
 

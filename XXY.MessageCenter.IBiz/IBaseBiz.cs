@@ -17,7 +17,7 @@ namespace XXY.MessageCenter.IBiz {
     }
 
     public interface IBaseBiz<T> : IBaseBiz {
-        T GetBySeq(decimal id);
+        Task<T> GetBySeq(decimal id);
 
         Task<bool> Delete(decimal id);
     }

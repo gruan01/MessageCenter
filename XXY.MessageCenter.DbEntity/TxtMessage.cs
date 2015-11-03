@@ -40,12 +40,12 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
-        public decimal SenderID {
+        public double SenderID {
             get;
             set;
         }
 
-        public decimal ReceiverID {
+        public double ReceiverID {
             get;
             set;
         }

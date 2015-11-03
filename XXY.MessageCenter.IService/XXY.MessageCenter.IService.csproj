@@ -43,6 +43,7 @@
     <Compile Include="IQueueService.cs" />
     <Compile Include="ITemplateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ITxtMessageViewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XXY.MessageCenter.BizEntity\XXY.MessageCenter.BizEntity.csproj">

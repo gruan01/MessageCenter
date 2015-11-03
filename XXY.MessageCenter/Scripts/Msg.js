@@ -15,4 +15,7 @@ hub.client.NewMsg = function (msg) {
     }
 };
 
-$.connection.hub.start();
+$.connection.hub.start()
+.done(function () {
+    hub.server.unReadCount();
+});

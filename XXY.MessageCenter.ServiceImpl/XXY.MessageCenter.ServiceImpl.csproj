@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TxtMessageViewServiceImpl.cs" />
     <Compile Include="QueueServiceImpl.cs" />
     <Compile Include="TemplateServiceImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

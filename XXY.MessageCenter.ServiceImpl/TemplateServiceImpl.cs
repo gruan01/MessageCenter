@@ -22,15 +22,15 @@ namespace XXY.MessageCenter.ServiceImpl {
             set;
         }
 
-        public Task<string> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null) {
-            var template = this.TemplateBiz.Value.GetByCode(code, appCode, msgType, lang);
+        public async Task<string> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null) {
+            var template = await this.TemplateBiz.Value.GetByCode(code, appCode, msgType, lang);
             if (template != null)
-                return Task.FromResult(template.Ctx);
+                return template.Ctx;
             else
-                return Task.FromResult("");
+                return "";
         }
 
-        public Task<IEnumerable<Template>> GetTemplates(string code, string appCode, MsgTypes? msgType = null, Langs? lang = null) {
+        public async Task<IEnumerable<Template>> GetTemplates(string code, string appCode, MsgTypes? msgType = null, Langs? lang = null) {
             var cond = new TemplateSearchCondition() {
                 AllowPage = false,
                 AppCode = appCode,
@@ -39,8 +39,7 @@ namespace XXY.MessageCenter.ServiceImpl {
                 MsgType = msgType
             };
 
-            var datas = this.TemplateBiz.Value.Search(cond);
-            return Task.FromResult(datas);
+            return await this.TemplateBiz.Value.Search(cond);
         }
     }
 }

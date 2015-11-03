@@ -24,18 +24,18 @@ namespace XXY.MessageCenter.Controllers {
             set;
         }
 
-        public ActionResult Index() {
+        public async Task<ActionResult> Index() {
             var cond = this.GetCondition<TemplateSearchCondition>();
             if (cond != null)
-                return Index(cond);
+                return await Index(cond);
             else
                 return View();
         }
 
 
         [HttpPost]
-        public ActionResult Index(TemplateSearchCondition condition) {
-            return View(PDM.Create(this.Biz.Value.Search(condition), condition));
+        public async Task<ActionResult> Index(TemplateSearchCondition condition) {
+            return View(PDM.Create(await this.Biz.Value.Search(condition), condition));
         }
 
         public ActionResult Create() {
@@ -58,8 +58,8 @@ namespace XXY.MessageCenter.Controllers {
             return RedirectToAction("Create");
         }
 
-        public ActionResult Detail(int id) {
-            var data = this.Biz.Value.GetBySeq(id);
+        public async Task<ActionResult> Detail(int id) {
+            var data = await this.Biz.Value.GetBySeq(id);
             if (data != null) {
                 ViewBag.IsEdit = false;
                 return View("Create", data);
@@ -75,8 +75,8 @@ namespace XXY.MessageCenter.Controllers {
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id) {
-            var data = this.Biz.Value.GetBySeq(id);
+        public async Task<ActionResult> Edit(int id) {
+            var data = await this.Biz.Value.GetBySeq(id);
             if (data != null) {
                 return View("Create", data);
             } else {

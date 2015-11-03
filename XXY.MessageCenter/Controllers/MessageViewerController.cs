@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using XXY.Common.MVC;
 using XXY.MessageCenter.BizEntity.Conditions;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.Filters;
@@ -13,6 +14,7 @@ using XXY.MessageCenter.Models;
 
 namespace XXY.MessageCenter.Controllers {
 
+    [RoutePrefix("MessageViewer/{lang=zh-CN}")]
     [CheckPower(false, Order = 10)]
     public class MessageViewerController : BaseController {
 
@@ -22,24 +24,24 @@ namespace XXY.MessageCenter.Controllers {
             set;
         }
 
-        public ActionResult Index() {
+        public async Task<ActionResult> Index() {
             var cond = this.GetCondition<MessageSearchCondition>();
             if (cond != null) {
-                return Index(cond);
+                return await Index(cond);
             } else
                 return View();
         }
 
         [HttpPost]
-        public ActionResult Index(MessageSearchCondition condition) {
-            var data = this.Biz.Value.Search(condition);
+        public async Task<ActionResult> Index(MessageSearchCondition condition) {
+            var data = await this.Biz.Value.Search(condition);
             var pdm = PDM.Create(data, condition);
             return View(pdm);
         }
 
-        [Route("{type}/{id}")]
-        public ActionResult Detail(MsgTypes type, int id) {
-            var data = this.Biz.Value.Get(type, id);
+        [Route("{type}/{id}"), MutiLang]
+        public async Task<ActionResult> Detail(MsgTypes type, int id) {
+            var data = await this.Biz.Value.Get(type, id);
             return View(data);
         }
 

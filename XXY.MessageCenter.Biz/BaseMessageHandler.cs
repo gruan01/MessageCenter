@@ -14,6 +14,7 @@ using XXY.MessageCenter.Queue;
 using Microsoft.Practices.ServiceLocation;
 using XXY.MessageCenter.BizEntity.Conditions;
 using XXY.MessageCenter.TxtMsgHub;
+using System.Data.Entity;
 
 namespace XXY.MessageCenter.Biz {
 
@@ -42,11 +43,11 @@ namespace XXY.MessageCenter.Biz {
 
         public abstract Task<bool> Handle();
 
-        public abstract void Update(Entities db, ProcessedMsg data);
+        public abstract Task Update(Entities db, ProcessedMsg data);
 
-        public abstract IEnumerable<BaseMessage> Search(MessageSearchCondition cond);
+        public abstract Task<IEnumerable<BaseMessage>> Search(MessageSearchCondition cond);
 
-        public abstract BaseMessage Get(int id);
+        public abstract Task<BaseMessage> Get(int id);
 
         public abstract Task<bool> Delete(int id);
     }
@@ -75,8 +76,8 @@ namespace XXY.MessageCenter.Biz {
             }
         }
 
-        public override void Update(Entities db, ProcessedMsg data) {
-            var entry = db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == data.MsgID);
+        public override async Task Update(Entities db, ProcessedMsg data) {
+            var entry = await db.Set<T>().FirstOrDefaultAsync(t => !t.IsDeleted && t.ID == data.MsgID);
             if (entry != null) {
                 entry.Status = data.IsSuccessed ? MsgStatus.Processed : MsgStatus.Failed;
                 this.SetModifyInfo(entry);
@@ -106,12 +107,12 @@ namespace XXY.MessageCenter.Biz {
             }
         }
 
-        public override IEnumerable<BaseMessage> Search(MessageSearchCondition cond) {
+        public override async Task<IEnumerable<BaseMessage>> Search(MessageSearchCondition cond) {
             using (var db = new Entities()) {
-                var datas = cond.Filter(db.Set<T>().Where(t => !t.IsDeleted))
+                var datas = await cond.Filter(db.Set<T>().Where(t => !t.IsDeleted))
                     .OrderByDescending(t => t.ID)
                     .DoPage(cond.Pager)
-                    .ToList();
+                    .ToListAsync();
 
                 //MsgType 并没有映射到表中, 只是构造函数中的一个参数而已.
                 //所以上一段是要先 ToList
@@ -132,23 +133,27 @@ namespace XXY.MessageCenter.Biz {
                                  es
                              };
 
+                List<BaseMessage> results = new List<BaseMessage>();
                 foreach (var d in query2) {
                     var data = d.m;
-                    d.m.ErrorInfo = string.Join(";", d.es.Select(E => E.Log));
-                    yield return data;
+                    data.ErrorInfo = string.Join(";", d.es.Select(E => E.Log));
+                    //yield return data;
+                    results.Add(data);
                 }
+
+                return results;
             }
         }
 
-        public override BaseMessage Get(int id) {
+        public override async Task<BaseMessage> Get(int id) {
             using (var db = new Entities()) {
-                return db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == id);
+                return await db.Set<T>().FirstOrDefaultAsync(t => !t.IsDeleted && t.ID == id);
             }
         }
 
         public override async Task<bool> Delete(int id) {
             using (var db = new Entities()) {
-                var ex = db.Set<T>().FirstOrDefault(t => !t.IsDeleted && t.ID == id);
+                var ex = await db.Set<T>().FirstOrDefaultAsync(t => !t.IsDeleted && t.ID == id);
                 if (ex != null) {
                     ex.IsDeleted = true;
                     this.SetModifyInfo(ex);
