@@ -505,6 +505,7 @@
     <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\MessageViewer\Index.cshtml" />
     <Content Include="Views\MessageViewer\Detail.cshtml" />
+    <Content Include="Views\Shared\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
