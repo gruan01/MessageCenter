@@ -15,17 +15,36 @@ namespace XXY.MessageCenter.IBiz {
 
         Task<BaseMessage> Get(MsgTypes type, int id);
 
+        /// <summary>
+        /// For Admin
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<bool> Delete(MsgTypes type, int id);
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msgID"></param>
+        /// <param name="receiverID"></param>
+        /// <param name="setReaded">是否设置已读</param>
+        /// <returns></returns>
+        Task<TxtMessage> GetTxtMsg(int msgID, decimal receiverID, bool setReaded = false);
 
+        /// <summary>
+        /// For User
+        /// </summary>
+        /// <param name="msgID"></param>
+        /// <param name="receiverID"></param>
+        /// <returns></returns>
+        Task<bool> DeleteTxtMsg(int msgID, decimal receiverID);
 
-        Task<TxtMessage> GetTxtMsg(int msgID, double receiverID);
+        Task<IEnumerable<TxtMessage>> GetTxtMsg(decimal receiverID, Pager pager = null, bool onlyUnread = true);
 
-        Task<IEnumerable<TxtMessage>> GetTxtMsg(double receiverID, Pager pager = null, bool onlyUnread = true);
-
-        Task<int> GetUnReadTxtMsgCount(double receiverID);
+        Task<int> GetUnReadTxtMsgCount(decimal receiverID);
 
         Task<bool> SetTxtMsgReaded(int msgID);
     }

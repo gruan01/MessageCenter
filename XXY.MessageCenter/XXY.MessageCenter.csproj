@@ -246,6 +246,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageViewerController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\TxtMsgController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="ExceptionHandlers\ArgumentExceptionHandler.cs" />
     <Compile Include="ExceptionHandlers\BaseExceptionHandler.cs" />
@@ -507,6 +508,8 @@
     <Content Include="Views\MessageViewer\Index.cshtml" />
     <Content Include="Views\MessageViewer\Detail.cshtml" />
     <Content Include="Views\Shared\Message.cshtml" />
+    <Content Include="Views\TxtMsg\Index.cshtml" />
+    <Content Include="Views\TxtMsg\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

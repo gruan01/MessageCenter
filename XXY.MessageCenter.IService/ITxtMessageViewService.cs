@@ -12,10 +12,10 @@ namespace XXY.MessageCenter.IService {
     public interface ITxtMessageViewService {
 
         [OperationContract]
-        Task<int> GetUnReadCount(double receiverID);
+        Task<int> GetUnReadCount(decimal receiverID);
 
         [OperationContract]
-        Task<TxtMessage> GetMessage(int msgID, double receiverID);
+        Task<TxtMessage> GetMessage(int msgID, decimal receiverID);
 
         [OperationContract]
         Task<bool> SetReaded(int msgID);

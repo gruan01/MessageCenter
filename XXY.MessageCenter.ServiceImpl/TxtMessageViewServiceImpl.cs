@@ -21,12 +21,12 @@ namespace XXY.MessageCenter.ServiceImpl {
             set;
         }
 
-        public async Task<int> GetUnReadCount(double receiverID) {
+        public async Task<int> GetUnReadCount(decimal receiverID) {
             return await this.Biz.Value.GetUnReadTxtMsgCount(receiverID);
         }
 
 
-        public async Task<TxtMessage> GetMessage(int msgID, double receiverID) {
+        public async Task<TxtMessage> GetMessage(int msgID, decimal receiverID) {
             return await this.Biz.Value.GetTxtMsg(msgID, receiverID);
         }
 

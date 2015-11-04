@@ -39,9 +39,9 @@ namespace XXY.MessageCenter {
                 return Enumerable.Empty<TxtMessage>();
         }
 
-        private double? GetUserID() {
+        private decimal? GetUserID() {
             var provider = (IUserIdProvider)GlobalHost.DependencyResolver.GetService(typeof(IUserIdProvider));
-            var uid = provider.GetUserId(Context.Request).ToDoubleOrNull();
+            var uid = provider.GetUserId(Context.Request).ToDecimalOrNull();
             return uid;
         }
     }

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Conditions\MessageSearchCondition.cs" />
     <Compile Include="Conditions\TemplateSearchCondition.cs" />
+    <Compile Include="Conditions\TxtMsgSeachCondition.cs" />
     <Compile Include="Dtos\BaseMessageDto.cs" />
     <Compile Include="Dtos\EmailDto.cs" />
     <Compile Include="Dtos\Profiles\MessageProfile.cs" />

@@ -36,14 +36,20 @@ namespace XXY.MessageCenter.Biz {
         }
 
 
-        public async Task<TxtMessage> GetTxtMsg(int msgID, double receiverID) {
+        public async Task<TxtMessage> GetTxtMsg(int msgID, decimal receiverID, bool setReaded = false) {
             using (var db = new Entities()) {
-                return await db.TxtMessages.FirstOrDefaultAsync(t => !t.IsDeleted && t.ReceiverID == receiverID && t.ID == msgID);
+                var data = await db.TxtMessages.FirstOrDefaultAsync(t => !t.IsDeleted && t.ReceiverID == receiverID && t.ID == msgID);
+                if (setReaded) {
+                    data.Readed = true;
+                    this.SetModifyInfo(data);
+                    await db.SaveChangesAsync();
+                }
+                return data;
             }
         }
 
 
-        public async Task<int> GetUnReadTxtMsgCount(double receiverID) {
+        public async Task<int> GetUnReadTxtMsgCount(decimal receiverID) {
             using (var db = new Entities()) {
                 return await db.TxtMessages.CountAsync(t => t.ReceiverID == receiverID && !t.IsDeleted && !t.Readed);
             }
@@ -64,7 +70,7 @@ namespace XXY.MessageCenter.Biz {
         }
 
 
-        public async Task<IEnumerable<TxtMessage>> GetTxtMsg(double receiverID, Pager pager = null, bool onlyUnread = true) {
+        public async Task<IEnumerable<TxtMessage>> GetTxtMsg(decimal receiverID, Pager pager = null, bool onlyUnread = true) {
             using (var db = new Entities()) {
                 var query = db.TxtMessages.Where(t => t.ReceiverID == receiverID && !t.IsDeleted);
                 if (onlyUnread) {
@@ -78,6 +84,20 @@ namespace XXY.MessageCenter.Biz {
                     .DoPage(pager)
                     .ToListAsync();
             }
+        }
+
+
+        public async Task<bool> DeleteTxtMsg(int msgID, decimal receiverID) {
+            using (var db = new Entities()) {
+                var data = await db.TxtMessages.FirstOrDefaultAsync(t => t.ID == msgID && t.ReceiverID == receiverID && !t.IsDeleted);
+                if (data != null) {
+                    data.IsDeleted = true;
+                    this.SetModifyInfo(data);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

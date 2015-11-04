@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201511030427411_TxtMessageReceiverSenderID.Designer.cs">
       <DependentUpon>201511030427411_TxtMessageReceiverSenderID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511040733334_ReceiverIDType.cs" />
+    <Compile Include="Migrations\201511040733334_ReceiverIDType.Designer.cs">
+      <DependentUpon>201511040733334_ReceiverIDType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511030427411_TxtMessageReceiverSenderID.resx">
       <DependentUpon>201511030427411_TxtMessageReceiverSenderID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511040733334_ReceiverIDType.resx">
+      <DependentUpon>201511040733334_ReceiverIDType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

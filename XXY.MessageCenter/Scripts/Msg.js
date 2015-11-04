@@ -40,7 +40,9 @@
         //获取未读条数
         msgHub.server.unReadCount().done(function (c) {
             updateBrdge(c);
-            updateLabel(Lang.UNREAD_MESSAGE.format(c));
+            if (c > 0) {
+                updateLabel(Lang.UNREAD_MESSAGE.format(c));
+            }
             unread = c;
         });
         
