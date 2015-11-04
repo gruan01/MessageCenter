@@ -5,12 +5,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using XXY.Common;
 using XXY.Common.Attributes;
 using XXY.MessageCenter.BizEntity.Conditions;
 using XXY.MessageCenter.DbContext;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.DbEntity.Enums;
 using XXY.MessageCenter.IBiz;
+using XXY.Common.Extends;
 
 namespace XXY.MessageCenter.Biz {
 
@@ -59,6 +61,23 @@ namespace XXY.MessageCenter.Biz {
                 }
             }
             return false;
+        }
+
+
+        public async Task<IEnumerable<TxtMessage>> GetTxtMsg(double receiverID, Pager pager = null, bool onlyUnread = true) {
+            using (var db = new Entities()) {
+                var query = db.TxtMessages.Where(t => t.ReceiverID == receiverID && !t.IsDeleted);
+                if (onlyUnread) {
+                    query = query.Where(t => !t.Readed);
+                }
+
+                if (pager == null)
+                    pager = new Pager();
+
+                return await query.OrderByDescending(t => t.CreateOn)
+                    .DoPage(pager)
+                    .ToListAsync();
+            }
         }
     }
 }

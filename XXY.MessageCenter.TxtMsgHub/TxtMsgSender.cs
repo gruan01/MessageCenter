@@ -28,9 +28,8 @@ namespace XXY.MessageCenter.TxtMsgHub {
 
         public static void Send(string userID, TxtMessage msg) {
             GlobalHost.ConnectionManager
-                .GetHubContext<MessageHub>()
+                .GetHubContext<IMHub>()
                 .Clients
-                //.All
                 .User(userID)
                 .newMsg(msg);
         }

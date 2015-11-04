@@ -235,6 +235,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Lang.cs" />
     <Compile Include="App_Start\LangConfig.cs" />
+    <Compile Include="App_Start\MsgHub.cs" />
     <Compile Include="App_Start\PageDatas.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SessionKeys.cs" />

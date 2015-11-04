@@ -27,6 +27,7 @@
     l.CHOICE_PORT_LOCATION = "选择港口/地点";
     l.CHOICE_LOCATION_GROUP = "选择地点组";
     //
+    l.UNREAD_MESSAGE = "{0} 条未读";
 
 
 })(Lang);

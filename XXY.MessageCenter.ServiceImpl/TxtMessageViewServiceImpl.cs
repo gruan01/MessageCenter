@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using XXY.Common.Attributes;
 using XXY.MessageCenter.DbEntity;
 using XXY.MessageCenter.IBiz;
+using XXY.MessageCenter.IService;
 
 namespace XXY.MessageCenter.ServiceImpl {
 

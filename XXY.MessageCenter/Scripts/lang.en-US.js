@@ -27,6 +27,6 @@
     l.CHOICE_PORT_LOCATION = "Choice Port or Location";
     l.CHOICE_LOCATION_GROUP = "Choice Location Group";
     //
-
+    l.UNREAD_MESSAGE = "{0} Unread";
 
 })(Lang);
