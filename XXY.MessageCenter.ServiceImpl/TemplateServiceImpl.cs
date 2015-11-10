@@ -22,12 +22,9 @@ namespace XXY.MessageCenter.ServiceImpl {
             set;
         }
 
-        public async Task<string> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null) {
+        public async Task<Template> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null) {
             var template = await this.TemplateBiz.Value.GetByCode(code, appCode, msgType, lang);
-            if (template != null)
-                return template.Ctx;
-            else
-                return "";
+            return template;
         }
 
         public async Task<IEnumerable<Template>> GetTemplates(string code, string appCode, MsgTypes? msgType = null, Langs? lang = null) {

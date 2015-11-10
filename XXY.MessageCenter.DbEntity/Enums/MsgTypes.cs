@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XXY.MessageCenter.DbEntity.Enums {
 
-    [Flags]
+    [DataContract]
     public enum MsgTypes : byte {
-        Email = 1,
-        SMS = 2,
-        WeChat = 4,
-        QQ = 8,
-        Txt = 16
+        [EnumMember]
+        Email = 0,
+        [EnumMember]
+        SMS = 1,
+        [EnumMember]
+        WeChat = 2,
+        [EnumMember]
+        QQ = 3,
+        [EnumMember]
+        Txt = 4
     }
 }

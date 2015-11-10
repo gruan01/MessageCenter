@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,19 @@ namespace XXY.MessageCenter.DbContext {
             modelBuilder.HasDefaultSchema("MESSAGECENTER");
 
             modelBuilder.Conventions.Add(new OracleConversion());
+
+            var entry = modelBuilder.Entity<Template>();
+            entry.Property(p => p.Code)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
+            entry.Property(p => p.AppCode)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
+            entry.Property(p => p.MsgType)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
+            entry.Property(p => p.Lang)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute()));
+
+
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -20,7 +20,7 @@ namespace XXY.MessageCenter.IService {
         /// <param name="msgType">消息类型</param>
         /// <returns></returns>
         [OperationContract]
-        Task<string> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null);
+        Task<Template> GetByCode(string code, string appCode, MsgTypes msgType, Langs? lang = null);
 
         [OperationContract]
         Task<IEnumerable<Template>> GetTemplates(string code, string appCode, MsgTypes? msgType = null, Langs? lang = null);

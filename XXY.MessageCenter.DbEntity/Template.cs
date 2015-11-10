@@ -20,7 +20,6 @@ namespace XXY.MessageCenter.DbEntity {
 
         [DataMember]
         [Required]
-        [Index]
         [StringLength(30)]
         public string Code {
             get;
@@ -28,7 +27,6 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
         [DataMember]
-        [Index]
         public MsgTypes MsgType {
             get;
             set;
@@ -36,7 +34,6 @@ namespace XXY.MessageCenter.DbEntity {
 
 
         [DataMember]
-        [Index]
         public Langs Lang {
             get;
             set;
@@ -44,7 +41,7 @@ namespace XXY.MessageCenter.DbEntity {
 
         [DataMember]
         [Required]
-        [Index, StringLength(30)]
+        [StringLength(30)]
         public string AppCode {
             get;
             set;

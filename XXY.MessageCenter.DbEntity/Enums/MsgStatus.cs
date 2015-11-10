@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XXY.MessageCenter.DbEntity.Enums {
 
-    [Flags]
+    [DataContract]
     public enum MsgStatus : byte {
-        New = 1,
-        Processing = 2,
-        Processed = 4,
-        Failed = 8
+        [EnumMember]
+        New = 0,
+        [EnumMember]
+        Processing = 1,
+        [EnumMember]
+        Processed = 2,
+        [EnumMember]
+        Failed = 3
     }
 }

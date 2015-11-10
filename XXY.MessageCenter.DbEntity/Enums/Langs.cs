@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XXY.MessageCenter.DbEntity.Enums {
-    
-    [Flags]
+
+    [DataContract]
     public enum Langs : byte {
-        ZhCn = 1,
-        EnUs = 2,
-        ZhTw = 4
+        [EnumMember]
+        ZhCn = 0,
+        [EnumMember]
+        EnUs = 1,
+        [EnumMember]
+        ZhTw = 2
     }
 }
