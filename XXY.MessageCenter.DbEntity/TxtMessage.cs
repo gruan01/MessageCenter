@@ -18,38 +18,46 @@ namespace XXY.MessageCenter.DbEntity {
     [ProtoContract(AsReferenceDefault = true, ImplicitFields = ImplicitFields.AllFields)]
     public class TxtMessage : BaseMessage {
 
+
         public TxtMessage()
             : base(Enums.MsgTypes.Txt, true) {
         }
 
 
+        [DataMember]
         [Required, StringLength(100)]
         public string Subject {
             get;
             set;
         }
 
+        [DataMember]
         public bool Readed {
             get;
             set;
         }
 
+        [DataMember]
         [Required, StringLength(20)]
         public string Sender {
             get;
             set;
         }
 
+
+        [DataMember]
         public decimal SenderID {
             get;
             set;
         }
 
+        [DataMember]
         public decimal ReceiverID {
             get;
             set;
         }
 
+        [DataMember]
         [Required, StringLength(20)]
         new public string Receiver {
             get {
@@ -60,6 +68,7 @@ namespace XXY.MessageCenter.DbEntity {
             }
         }
 
+        [DataMember]
         [Required, StringLength(1000)]
         new public string Ctx {
             get {

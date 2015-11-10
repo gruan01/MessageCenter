@@ -30,29 +30,36 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
+
         public BaseMessage(MsgTypes type, bool allowHtml = false) {
             this.MsgType = type;
             this.AllowHtml = allowHtml;
+            this.PRI = Priorities.Normal;
+            this.Status = MsgStatus.New;
         }
 
 
+        [DataMember]
         public Priorities PRI {
             get;
             set;
         }
 
+        [DataMember]
         [Required]
         public string Ctx {
             get;
             set;
         }
 
+        [DataMember]
         [Required]
         public string Receiver {
             get;
             set;
         }
 
+        [DataMember]
         public MsgStatus Status {
             get;
             set;

@@ -24,6 +24,7 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
+        [DataMember]
         [Required, StringLength(100)]
         new public string Receiver {
             get {

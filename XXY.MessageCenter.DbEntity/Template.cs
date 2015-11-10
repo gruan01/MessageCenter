@@ -18,6 +18,7 @@ namespace XXY.MessageCenter.DbEntity {
     public class Template : BaseEntity {
 
 
+        [DataMember]
         [Required]
         [Index]
         [StringLength(30)]
@@ -26,18 +27,22 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        [DataMember]
         [Index]
         public MsgTypes MsgType {
             get;
             set;
         }
 
+
+        [DataMember]
         [Index]
         public Langs Lang {
             get;
             set;
         }
 
+        [DataMember]
         [Required]
         [Index, StringLength(30)]
         public string AppCode {
@@ -45,17 +50,21 @@ namespace XXY.MessageCenter.DbEntity {
             set;
         }
 
+        [DataMember]
         public bool IsDefault {
             get;
             set;
         }
 
+        [DataMember]
         [StringLength(200), Required]
         public string Subject {
             get;
             set;
         }
 
+
+        [DataMember]
         public string Ctx {
             get;
             set;

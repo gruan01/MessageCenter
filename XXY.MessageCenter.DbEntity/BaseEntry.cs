@@ -16,6 +16,7 @@ namespace XXY.MessageCenter.DbEntity {
     [ProtoContract(AsReferenceDefault = true, ImplicitFields = ImplicitFields.AllFields)]
     public abstract class BaseEntity {
 
+        [DataMember]
         [Key, Column("ID", Order = 0)]
         public int ID {
             get;
@@ -23,31 +24,35 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
-
+        [DataMember]
         public DateTime CreateOn {
             get;
             set;
         }
 
 
+        [DataMember]
         [StringLength(20), Required]
         public string CreateByUserName {
             get;
             set;
         }
 
+        [DataMember]
         public decimal CreateByUserID {
             get;
             set;
         }
 
 
+        [DataMember]
         public DateTime? ModifyOn {
             get;
             set;
         }
 
 
+        [DataMember]
         [StringLength(20)]
         public string ModifyByUserName {
             get;
@@ -55,11 +60,13 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
+        [DataMember]
         public decimal? ModifyByUserID {
             get;
             set;
         }
 
+        [DataMember]
         public bool IsDeleted {
             get;
             set;

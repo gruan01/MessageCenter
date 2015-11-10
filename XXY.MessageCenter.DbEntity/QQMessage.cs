@@ -24,12 +24,14 @@ namespace XXY.MessageCenter.DbEntity {
         }
 
 
+        [DataMember]
         [Required, StringLength(20)]
         new public string Receiver {
             get;
             set;
         }
 
+        [DataMember]
         [Required, StringLength(1000)]
         new public string Ctx {
             get;

@@ -22,12 +22,16 @@ namespace XXY.MessageCenter.DbEntity {
             : base(Enums.MsgTypes.SMS) {
         }
 
+
+        [DataMember]
         [Required, StringLength(20)]
         new public string Receiver {
             get;
             set;
         }
 
+
+        [DataMember]
         [Required, StringLength(200)]
         new public string Ctx {
             get;

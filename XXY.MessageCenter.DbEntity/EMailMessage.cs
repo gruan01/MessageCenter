@@ -23,16 +23,20 @@ namespace XXY.MessageCenter.DbEntity {
             : base(MsgTypes.Email, true) {
         }
 
+
+        [DataMember]
         public string Cc {
             get;
             set;
         }
 
+        [DataMember]
         public string Bcc {
             get;
             set;
         }
 
+        [DataMember]
         [Required, StringLength(100)]
         public string Subject {
             get;
