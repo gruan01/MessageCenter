@@ -82,6 +82,8 @@ namespace XXY.MessageCenter.Queue {
                     msg.Recoverable = true;
 
                     mq.Send(msg, trans);
+                    //不能这样，否则 Processed Queue 不会被写入
+                    //mq.Send(msg, MessageQueueTransactionType.Automatic);
                     trans.Commit();
                     return true;
                 } catch (Exception ex) {
@@ -110,7 +112,15 @@ namespace XXY.MessageCenter.Queue {
                     if (this.OnDataReceived != null)
                         this.OnDataReceived(null, new DataReceivedArgs(msg.Body));
 
-                    queue.ReceiveById(e.Message.Id, MessageQueueTransactionType.Automatic);
+                    //在远程队列上 (WIN7)，用 Automatic 会抛出异常。
+                    //try {
+                    //    queue.ReceiveById(e.Message.Id, MessageQueueTransactionType.Single);
+                    //} catch {
+                    //    queue.ReceiveById(e.Message.Id, MessageQueueTransactionType.Automatic);
+                    //}
+
+                    queue.Receive();
+
                     transaction.Complete();
                 }
             }
