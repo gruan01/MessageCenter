@@ -75,7 +75,14 @@ namespace XXY.MessageCenter {
             }
 
             public override Func<Type, LifetimeManager> GetLifetimeManager() {
-                return (WithLifetime.ContainerControlled);
+                var bt = typeof(BaseBiz);
+                return t => {
+                    if (t.IsSubclassOf(bt)) {
+                        //return WithLifetime.Transient(t);
+                        return WithLifetime.PerResolve(t);
+                    }
+                    return WithLifetime.ContainerControlled(t);
+                };
             }
 
             public override Func<Type, String> GetName() {
