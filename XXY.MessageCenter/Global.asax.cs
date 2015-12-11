@@ -28,6 +28,8 @@ namespace XXY.MessageCenter {
             LangConfig.Config();
             DisplayModelConfig.Config();
 
+            DependencyResolver.Current.GetService<ILog>().Config();
+
             ModelBinders.Binders.DefaultBinder = new SmartModelBinder();
             AnnorationHelper.AutoMap();
 
